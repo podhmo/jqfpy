@@ -39,6 +39,8 @@ If you have python's knowledge, this is tiny oneliner, isn't?
 
   $ cat data.json | jqfpy '[k for k, opts in get("apps").items() if opts["use"]]'
 
+(`get()` is special function, like a `json.load(sys.stdin).get`.)
+
 install
 ----------------------------------------
 

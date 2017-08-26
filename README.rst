@@ -27,7 +27,7 @@ For example, extracting key-name when use is true only, from below JSON data.
       }
     }
 
-What is jq's answer? (taking over 30 minutes).
+What is jq's answer? (taking over 30 minutes, my past challenges).
 
 .. code-block:: console
 

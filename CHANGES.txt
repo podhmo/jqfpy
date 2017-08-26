@@ -1,1 +1,9 @@
+0.1.0
 
+- adding some options
+- nocode is same as `jq .` (`js == jq .`)
+- showing pycode when error is raised
+
+0.0.1
+
+- first release

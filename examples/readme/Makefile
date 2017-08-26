@@ -5,3 +5,4 @@ jq:
 
 py:
 	cat data.json | jqfpy '[k for k, opts in get("apps").items() if opts["use"]]'
+

@@ -1,8 +1,12 @@
 import sys
 import argparse
-from jqfpy import transform
+import jqfpy
 import jqfpy.loader as loader
 import jqfpy.dumper as dumper
+
+
+def _describe_pycode(pycode, *, indent="", fp=sys.stderr):
+    print(indent + pycode.replace("\n", "\n" + indent), file=fp)
 
 
 def main():
@@ -15,11 +19,32 @@ def main():
     parser.add_argument("-a", "--ascii-output", action="store_true")
     parser.add_argument("-r", "--raw-output", action="store_true")
     parser.add_argument("--squash", action="store_true")
+    parser.add_argument("--show-code-only", action="store_true")
 
     args = parser.parse_args()
 
+    rvalname = jqfpy.create_rvalname()
+    pycode = jqfpy.create_pycode(args.code, rvalname)
+
+    if args.show_code_only:
+        _describe_pycode(pycode, fp=sys.stdout, indent="")
+        sys.exit(0)
+
     d = loader.load(args.input, slurp=args.slurp_input)
-    r = transform(d, args.code)
+    try:
+        r = jqfpy.exec_pycode(d, pycode, rvalname)
+    except Exception as e:
+        fp = sys.stderr
+        print("\x1b[32m\x1b[1mcode:\x1b[0m", file=fp)
+        print("----------------------------------------", file=fp)
+        print("\x1b[0m", file=fp)
+        _describe_pycode(pycode, fp=fp, indent="")
+        print("\x1b[0m", file=fp)
+        print("----------------------------------------", file=fp)
+        print("", file=fp)
+        print("\x1b[32m\x1b[1merror:\x1b[0m", file=fp)
+        raise
+
     dumper.dump(
         r,
         fp=sys.stdout,

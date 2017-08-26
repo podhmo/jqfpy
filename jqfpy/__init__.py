@@ -1,6 +1,5 @@
 import random
 
-
 missing = object()
 
 
@@ -28,13 +27,18 @@ class Getter:
         return d
 
 
-def transform(d, code):
+def create_rvalname():
+    return "r{}".format(str(random.random())[2:])
+
+
+def create_pycode(code, rvalname):
     lines = [line.strip() for line in code.split(";")]
-    rmarker = "r{}".format(str(random.random())[2:])
-    lines[-1] = "{} = {}".format(rmarker, lines[-1])
+    lines[-1] = "{} = {}".format(rvalname, lines[-1])
     pycode = "\n".join(lines)
+    return pycode
 
-    env = {rmarker: {}, "get": Getter(d).get}
+
+def exec_pycode(d, pycode, rvalname):
+    env = {rvalname: {}, "get": Getter(d).get}
     exec(pycode, env)
-
-    return env[rmarker]
+    return env[rvalname]

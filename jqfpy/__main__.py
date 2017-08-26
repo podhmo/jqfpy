@@ -7,7 +7,7 @@ import jqfpy.dumper as dumper
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("code")
+    parser.add_argument("code", nargs="?", default="get()")
     parser.add_argument("--input", type=argparse.FileType("r"), default=sys.stdin)
     parser.add_argument("-c", "--compact-output", action="store_true")
     parser.add_argument("-s", "--slurp-input", action="store_true")

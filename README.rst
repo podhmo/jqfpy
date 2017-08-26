@@ -74,7 +74,7 @@ this is jqfpy version of `jq's Tutorial <https://stedolan.github.io/jq/tutorial/
 
 .. code-block:: console
 
-   alias jsonDATA = "curl 'https://api.github.com/repos/stedolan/jq/commits?per_page=5'"
+   alias jsonDATA="curl 'https://api.github.com/repos/stedolan/jq/commits?per_page=5'"
    # jq.
    jsonDATA | jq '.'
    # jqfpy.

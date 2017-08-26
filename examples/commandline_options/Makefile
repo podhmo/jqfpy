@@ -20,3 +20,8 @@ default: 00 01 02 03
 	echo --ascii-output
 	cat 03data.json | ${QJ}  'get()'
 	cat 03data.json | ${QJ} -a 'get()'
+
+04:
+	echo --raw-output
+	cat 03data.json | ${QJ}  'get("en")'
+	cat 03data.json | ${QJ} -r 'get("en")'

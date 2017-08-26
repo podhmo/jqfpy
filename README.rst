@@ -70,7 +70,7 @@ todo.
 tutorial
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-this is jqfpy version of [jq's Tutorial](https://stedolan.github.io/jq/tutorial/).
+this is jqfpy version of `jq's Tutorial <https://stedolan.github.io/jq/tutorial/>`_.
 
 .. code-block:: console
 

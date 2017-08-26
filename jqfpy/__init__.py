@@ -1,6 +1,5 @@
-import sys
 import random
-import json
+
 
 missing = object()
 
@@ -39,15 +38,3 @@ def transform(d, code):
     exec(pycode, env)
 
     return env[rmarker]
-
-
-def run(stream, code, *, squash=False):
-    d = json.load(stream)
-    r = transform(d, code)
-    if squash:
-        for line in r:
-            json.dump(line, sys.stdout, indent=2, ensure_ascii=False)
-            print()
-    else:
-        json.dump(r, sys.stdout, indent=2, ensure_ascii=False)
-        print()

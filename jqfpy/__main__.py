@@ -1,5 +1,6 @@
 import os
 import sys
+import contextlib
 import argparse
 import jqfpy
 import jqfpy.loader as loader
@@ -17,6 +18,23 @@ def is_fd_alive(fd):
     return bool(select.select([fd], [], [], 0)[0])
 
 
+@contextlib.contextmanager
+def gentle_error_reporting(pycode, fp):
+    try:
+        yield
+    except Exception as e:
+        fp = sys.stderr
+        print("\x1b[32m\x1b[1mcode:\x1b[0m", file=fp)
+        print("----------------------------------------", file=fp)
+        print("\x1b[0m", file=fp)
+        _describe_pycode(pycode, fp=fp, indent="")
+        print("\x1b[0m", file=fp)
+        print("----------------------------------------", file=fp)
+        print("", file=fp)
+        print("\x1b[32m\x1b[1merror:\x1b[0m", file=fp)
+        raise
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("code", nargs="?", default="get()")
@@ -31,13 +49,17 @@ def main():
     parser.add_argument("--show-code-only", action="store_true")
 
     args = parser.parse_args()
-    rvalname = jqfpy.create_rvalname()
-    pycode = jqfpy.create_pycode(args.code, rvalname)
+    fnname = "_transform"
+    pycode = jqfpy.create_pycode(fnname, args.code)
+
     fp = sys.stdout
 
     if args.show_code_only:
         _describe_pycode(pycode, fp=fp, indent="")
         sys.exit(0)
+
+    with gentle_error_reporting(pycode, fp):
+        transform_fn = jqfpy.exec_pycode(fnname, pycode)
 
     if is_fd_alive(args.input):
         files = [args.input]
@@ -49,20 +71,8 @@ def main():
 
     for stream in files:
         for d in loader.load(stream, slurp=args.slurp_input):
-            try:
-                r = jqfpy.exec_pycode(d, pycode, rvalname)
-            except Exception as e:
-                fp = sys.stderr
-                print("\x1b[32m\x1b[1mcode:\x1b[0m", file=fp)
-                print("----------------------------------------", file=fp)
-                print("\x1b[0m", file=fp)
-                _describe_pycode(pycode, fp=fp, indent="")
-                print("\x1b[0m", file=fp)
-                print("----------------------------------------", file=fp)
-                print("", file=fp)
-                print("\x1b[32m\x1b[1merror:\x1b[0m", file=fp)
-                raise
-
+            with gentle_error_reporting(pycode, fp):
+                r = jqfpy.transform(transform_fn, d)
             dumper.dump(
                 r,
                 fp=fp,

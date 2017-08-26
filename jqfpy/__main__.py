@@ -12,6 +12,7 @@ def _describe_pycode(pycode, *, indent="", fp=sys.stderr):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("code", nargs="?", default="get()")
+    parser.add_argument("file", nargs="*", type=argparse.FileType("r"))
     parser.add_argument("--input", type=argparse.FileType("r"), default=sys.stdin)
     parser.add_argument("-c", "--compact-output", action="store_true")
     parser.add_argument("-s", "--slurp-input", action="store_true")
@@ -22,7 +23,6 @@ def main():
     parser.add_argument("--show-code-only", action="store_true")
 
     args = parser.parse_args()
-
     rvalname = jqfpy.create_rvalname()
     pycode = jqfpy.create_pycode(args.code, rvalname)
 
@@ -30,32 +30,37 @@ def main():
         _describe_pycode(pycode, fp=sys.stdout, indent="")
         sys.exit(0)
 
-    d = loader.load(args.input, slurp=args.slurp_input)
-    try:
-        r = jqfpy.exec_pycode(d, pycode, rvalname)
-    except Exception as e:
-        fp = sys.stderr
-        print("\x1b[32m\x1b[1mcode:\x1b[0m", file=fp)
-        print("----------------------------------------", file=fp)
-        print("\x1b[0m", file=fp)
-        _describe_pycode(pycode, fp=fp, indent="")
-        print("\x1b[0m", file=fp)
-        print("----------------------------------------", file=fp)
-        print("", file=fp)
-        print("\x1b[32m\x1b[1merror:\x1b[0m", file=fp)
-        raise
+    files = args.file[:]
+    if not files:
+        files.append(args.input)
 
-    dumper.dump(
-        r,
-        fp=sys.stdout,
-        squash=args.squash,
-        raw=args.raw_output,
-        json_kwargs=dict(
-            indent=None if args.compact_output else 2,
-            sort_keys=args.sort_keys,
-            ensure_ascii=args.ascii_output,
-        ),
-    )
+    for stream in files:
+        d = loader.load(stream, slurp=args.slurp_input)
+        try:
+            r = jqfpy.exec_pycode(d, pycode, rvalname)
+        except Exception as e:
+            fp = sys.stderr
+            print("\x1b[32m\x1b[1mcode:\x1b[0m", file=fp)
+            print("----------------------------------------", file=fp)
+            print("\x1b[0m", file=fp)
+            _describe_pycode(pycode, fp=fp, indent="")
+            print("\x1b[0m", file=fp)
+            print("----------------------------------------", file=fp)
+            print("", file=fp)
+            print("\x1b[32m\x1b[1merror:\x1b[0m", file=fp)
+            raise
+
+        dumper.dump(
+            r,
+            fp=sys.stdout,
+            squash=args.squash,
+            raw=args.raw_output,
+            json_kwargs=dict(
+                indent=None if args.compact_output else 2,
+                sort_keys=args.sort_keys,
+                ensure_ascii=args.ascii_output,
+            ),
+        )
 
 
 if __name__ == "__main__":

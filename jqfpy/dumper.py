@@ -6,13 +6,10 @@ def dump(
     fp,
     *,
     squash=False,
-    compact=False,
     raw=False,
     json_kwargs=None,
 ):
     opts = json_kwargs or dict(sort_keys=False, ensure_ascii=False)
-    if not compact:
-        opts["indent"] = 2
 
     def _dump(d):
         if raw and isinstance(d, str):

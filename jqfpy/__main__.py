@@ -49,9 +49,9 @@ def main():
         r,
         fp=sys.stdout,
         squash=args.squash,
-        compact=args.compact_output,
         raw=args.raw_output,
         json_kwargs=dict(
+            indent=None if args.compact_output else 2,
             sort_keys=args.sort_keys,
             ensure_ascii=args.ascii_output,
         ),

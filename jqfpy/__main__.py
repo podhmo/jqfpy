@@ -1,3 +1,4 @@
+import os
 import sys
 import argparse
 import jqfpy
@@ -7,6 +8,13 @@ import jqfpy.dumper as dumper
 
 def _describe_pycode(pycode, *, indent="", fp=sys.stderr):
     print(indent + pycode.replace("\n", "\n" + indent), file=fp)
+
+
+def is_fd_alive(fd):
+    if os.name == 'nt':
+        return not os.isatty(fd.fileno())
+    import select
+    return bool(select.select([fd], [], [], 0)[0])
 
 
 def main():
@@ -30,9 +38,13 @@ def main():
         _describe_pycode(pycode, fp=sys.stdout, indent="")
         sys.exit(0)
 
-    files = args.file[:]
-    if not files:
-        files.append(args.input)
+    if is_fd_alive(args.input):
+        files = [args.input]
+    elif args.file:
+        files = args.file[:]
+    else:
+        parser.print_help()
+        sys.exit(0)
 
     for stream in files:
         d = loader.load(stream, slurp=args.slurp_input)

@@ -45,5 +45,7 @@ setup(
     tests_require=tests_require,
     test_suite="jqfpy.tests",
     entry_points="""
+    [console_scripts]
+    jqfpy=jqfpy.__main__:main
 """
 )

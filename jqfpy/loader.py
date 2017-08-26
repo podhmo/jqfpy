@@ -1,12 +1,13 @@
 import json
 from json.decoder import WHITESPACE
+from collections import deque
 
 
 def load(stream, *, slurp=False):
     if not slurp:
         yield from loads(stream.read(), slurp=slurp)
     else:
-        buf = []
+        buf = deque([], maxlen=100)
         for line in stream:
             buf.append(line)
             try:

@@ -36,6 +36,7 @@ What is jq's answer? (taking over 30 minutes).
 If you have python's knowledge, this is tiny oneliner, isn't?
 
 .. code-block:: console
+
   $ cat data.json | jqfpy '[k for k, opts in get("apps").items() if opts["use"]]'
 
 install

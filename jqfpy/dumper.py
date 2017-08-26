@@ -1,8 +1,8 @@
 import json
 
 
-def dump(d, fp, *, squash=False, compact=False):
-    opts = {"ensure_ascii": False}
+def dump(d, fp, *, squash=False, compact=False, sort_keys=False, ensure_ascii=False):
+    opts = {"ensure_ascii": ensure_ascii, "sort_keys": sort_keys}
     if not compact:
         opts["indent"] = 2
 

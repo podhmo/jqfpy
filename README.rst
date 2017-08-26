@@ -31,7 +31,7 @@ What is jq's answer? (taking over 30 minutes, my past challenges).
 
 .. code-block:: console
 
-  $ cat data.json | jq -r '.apps | . as $$o | keys | map(select($$o[.].use))'
+  $ cat data.json | jq '.apps | . as $$o | keys | map(select($$o[.].use))'
   [
     "bar",
     "boo",

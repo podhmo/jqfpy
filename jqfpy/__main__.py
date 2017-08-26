@@ -20,17 +20,17 @@ def main():
 
     d = loader.load(args.input, slurp=args.slurp_input)
     r = transform(d, args.code)
-    if args.raw_output and isinstance(r, str):
-        print(r)
-    else:
-        dumper.dump(
-            r,
-            fp=sys.stdout,
-            squash=args.squash,
-            compact=args.compact_output,
+    dumper.dump(
+        r,
+        fp=sys.stdout,
+        squash=args.squash,
+        compact=args.compact_output,
+        raw=args.raw_output,
+        json_kwargs=dict(
             sort_keys=args.sort_keys,
             ensure_ascii=args.ascii_output,
-        )
+        ),
+    )
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 QJ = python -m jqfpy
 
-default: 00 01 02 03
+default: 00 01 02 03 04
 
 00:
 	echo --compact-output
@@ -25,3 +25,5 @@ default: 00 01 02 03
 	echo --raw-output
 	cat 03data.json | ${QJ}  'get("en")'
 	cat 03data.json | ${QJ} -r 'get("en")'
+	cat 04data.json | ${QJ} --squash
+	cat 04data.json | ${QJ} --squash -r

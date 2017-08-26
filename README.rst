@@ -32,19 +32,31 @@ What is jq's answer? (taking over 30 minutes, my past challenges).
 .. code-block:: console
 
   $ cat data.json | jq -r '.apps | . as $$o | keys | map(select($$o[.].use))'
+  [
+    "bar",
+    "boo",
+    "foo"
+  ]
 
 If you have python's knowledge, this is tiny oneliner, isn't it?
 
 .. code-block:: console
 
   $ cat data.json | jqfpy '[k for k, opts in get("apps").items() if opts["use"]]'
+  [
+    "foo",
+    "bar",
+    "boo"
+  ]
 
 (`get()` is special function, like a `json.load(sys.stdin).get`.)
 
 install
 ----------------------------------------
 
-todo
+.. code-block:: console
+
+  pip install jqfpy
 
 tutorial
 ----------------------------------------

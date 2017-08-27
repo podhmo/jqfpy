@@ -26,9 +26,7 @@ def gentle_error_reporting(pycode, fp):
         fp = sys.stderr
         print("\x1b[32m\x1b[1mcode:\x1b[0m", file=fp)
         print("----------------------------------------", file=fp)
-        print("\x1b[0m", file=fp)
         _describe_pycode(pycode, fp=fp, indent="")
-        print("\x1b[0m", file=fp)
         print("----------------------------------------", file=fp)
         print("", file=fp)
         print("\x1b[32m\x1b[1merror:\x1b[0m", file=fp)

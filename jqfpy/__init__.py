@@ -6,11 +6,14 @@ class Getter:
         self.d = d
         self.sep = sep
 
+    def split_keys(self, k):
+        return [normalize_json_pointer(x) for x in k.split(self.sep)]
+
     def get(self, k=None, d=None, default=None):
         d = d or self.d
         if k is None:
             return d
-        ks = k.split(self.sep)
+        ks = self.split_keys(k)
         for k in ks:
             if k.isdecimal():
                 k = int(k)
@@ -23,6 +26,14 @@ class Getter:
                 if d is missing:
                     return default
         return d
+
+    __call__ = get
+
+
+def normalize_json_pointer(ref):
+    if "~" not in ref:
+        return ref
+    return ref.replace("~1", "/").replace("~0", "~")
 
 
 def create_pycode(fnname, code):

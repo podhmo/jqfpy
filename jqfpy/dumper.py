@@ -7,7 +7,7 @@ def dump(
     *,
     squash=False,
     raw=False,
-    json_kwargs=None,
+    json_kwargs=None
 ):
     opts = json_kwargs or dict(sort_keys=False, ensure_ascii=False)
 

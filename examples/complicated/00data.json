@@ -1,0 +1,10 @@
+{
+  "paths": {
+    "/api/foo": {
+      "description": "foo"
+    },
+    "~api~bar": {
+      "description": "bar"
+    }
+  }
+}

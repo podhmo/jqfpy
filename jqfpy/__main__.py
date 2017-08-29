@@ -68,7 +68,7 @@ def main():
         sys.exit(0)
 
     for stream in files:
-        for d in loader.load(stream, slurp=args.slurp_input):
+        for d in loader.load(stream):
             with gentle_error_reporting(pycode, fp):
                 r = jqfpy.transform(transform_fn, d)
             dumper.dump(

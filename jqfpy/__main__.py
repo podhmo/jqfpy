@@ -43,10 +43,16 @@ def main():
     parser.add_argument("-S", "--sort-keys", action="store_true")
     parser.add_argument("-a", "--ascii-output", action="store_true")
     parser.add_argument("-r", "--raw-output", action="store_true")
+
+    parser.add_argument("--buffered", action="store_true", dest="buffered")
+    parser.add_argument("--unbuffered", action="store_false", dest="buffered")
+    parser.set_defaults(buffered=False)
+
     parser.add_argument("--squash", action="store_true")
     parser.add_argument("--show-code-only", action="store_true")
 
     args = parser.parse_args()
+
     fnname = "_transform"
     pycode = jqfpy.create_pycode(fnname, args.code)
 
@@ -84,7 +90,8 @@ def main():
                 ensure_ascii=args.ascii_output,
             ),
         )
-        fp.flush()
+        if not args.buffered:
+            fp.flush()
 
     if args.slurp:
         d = list(_load(files))
@@ -95,6 +102,7 @@ def main():
         for d in _load(files):
             r = jqfpy.transform(transform_fn, d)
             _dump(r)
+    fp.flush()
 
 
 if __name__ == "__main__":

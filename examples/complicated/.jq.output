@@ -1,18 +1,25 @@
-[
-  {
-    "age": 20,
-    "name": "foo"
-  },
-  {
-    "age": 20,
-    "name": "foo"
-  },
-  {
-    "age": 22,
-    "name": "bar"
-  },
-  {
-    "age": 22,
-    "name": "bar"
-  }
-]
+{"message": "stderr", "i": 0}
+{"message": "stderr", "i": 1}
+{"message": "stderr", "i": 2}
+{"message": "stderr", "i": 3}
+{"message": "stderr", "i": 4}
+{
+  "message": "stdout",
+  "i": 0
+}
+{
+  "message": "stdout",
+  "i": 1
+}
+{
+  "message": "stdout",
+  "i": 2
+}
+{
+  "message": "stdout",
+  "i": 3
+}
+{
+  "message": "stdout",
+  "i": 4
+}

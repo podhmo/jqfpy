@@ -32,3 +32,8 @@ QJ = python -m jqfpy
 	@jq -M -S --slurp 'sort_by(.age)' 01data.json 01data.json > .jq.output
 	@${QJ} -S --slurp 'sorted(get(), key=lambda x: int(x["age"]))' 01data.json 01data.json > .qj.output
 	diff -u .jq.output .qj.output
+
+# buffered
+02:
+	@echo "--buffered----------------------------------------"
+	(python gen.py | jq . | cat ) > .jq.output 2>&1

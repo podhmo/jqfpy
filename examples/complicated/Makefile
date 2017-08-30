@@ -1,9 +1,16 @@
 QJ = python -m jqfpy
 
+defaut: 00 01
+
 # json pointer
 00:
-	${QJ} 'get("paths/~1api~1foo")' 00data.json
-	${QJ} 'get("paths/~0api~0bar")' 00data.json
+	rm 	-f .jq.output0 .qj.output0
+	@${QJ} -S 'get("paths/~1api~1foo")' 00data.json > .qj.output0
+	@jq -S '.paths."/api/foo"' 00data.json > .jq.output0
+	diff -u .jq.output0 .qj.output0
+	@${QJ} 'get("paths/~0api~0bar")' 00data.json > .qj.output0
+	@jq -S '.paths."~api~bar"' 00data.json > .jq.output0
+	diff -u .jq.output0 .qj.output0
 
 # --slurp, --unbuffered
 01:

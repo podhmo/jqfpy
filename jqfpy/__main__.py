@@ -39,7 +39,7 @@ def main():
     parser.add_argument("file", nargs="*", type=argparse.FileType("r"))
     parser.add_argument("--input", type=argparse.FileType("r"), default=sys.stdin)
     parser.add_argument("-c", "--compact-output", action="store_true")
-    parser.add_argument("-s", "--slurp-input", action="store_true")
+    parser.add_argument("-s", "--slurp", action="store_true")
     parser.add_argument("-S", "--sort-keys", action="store_true")
     parser.add_argument("-a", "--ascii-output", action="store_true")
     parser.add_argument("-r", "--raw-output", action="store_true")
@@ -67,22 +67,34 @@ def main():
         parser.print_help()
         sys.exit(0)
 
-    for stream in files:
-        for d in loader.load(stream):
-            with gentle_error_reporting(pycode, fp):
-                r = jqfpy.transform(transform_fn, d)
-            dumper.dump(
-                r,
-                fp=fp,
-                squash=args.squash,
-                raw=args.raw_output,
-                json_kwargs=dict(
-                    indent=None if args.compact_output else 2,
-                    sort_keys=args.sort_keys,
-                    ensure_ascii=args.ascii_output,
-                ),
-            )
-            fp.flush()
+    def _load(streams):
+        for stream in streams:
+            for d in loader.load(stream):
+                yield d
+
+    def _dump(d):
+        dumper.dump(
+            d,
+            fp=fp,
+            squash=args.squash,
+            raw=args.raw_output,
+            json_kwargs=dict(
+                indent=None if args.compact_output else 2,
+                sort_keys=args.sort_keys,
+                ensure_ascii=args.ascii_output,
+            ),
+        )
+        fp.flush()
+
+    if args.slurp:
+        d = list(_load(files))
+        with gentle_error_reporting(pycode, fp):
+            r = jqfpy.transform(transform_fn, d)
+        _dump(r)
+    else:
+        for d in _load(files):
+            r = jqfpy.transform(transform_fn, d)
+            _dump(r)
 
 
 if __name__ == "__main__":

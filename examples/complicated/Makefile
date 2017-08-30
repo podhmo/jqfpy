@@ -65,5 +65,14 @@ defaut: 00 01
 
 # broken json
 03:
-	${QJ} "get()" 03data.json
+	@echo "--broken 1json---------------------------------"
+	${QJ} "get()" 03data.json > .qj.output3 2>&1 || exit 0
+	test -n "`grep JSONDecodeError .qj.output3`"
 
+	@echo "--broken 2json---------------------------------"
+	${QJ} "get()" 04data.json > .qj.output3 2>&1 || exit 0
+	test -n "`grep JSONDecodeError .qj.output3`"
+
+	@echo "--broken 2json with slurp ---------------------------------"
+	${QJ} --slurp "get()" 04data.json > .qj.output3 2>&1 || exit 0
+	test -n "`grep JSONDecodeError .qj.output3`"

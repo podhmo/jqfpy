@@ -24,6 +24,11 @@ QJ = python -m jqfpy
 	diff -u .jq.output .qj.output
 
 	@echo "--one file slurp----------------------------------------"
-	@jq . -M -S --slurp 01data.json > .jq.output
-	@${QJ} -S --slurp 'get()' 01data.json > .qj.output
+	@jq . -M -S --slurp 'sort_by(.age)' 01data.json > .jq.output
+	@${QJ} -S --slurp 'sorted(get(), key=lambda x: int(x["age"]))' 01data.json > .qj.output
+	diff -u .jq.output .qj.output
+
+	@echo "--two files slurp----------------------------------------"
+	@jq -M -S --slurp 'sort_by(.age)' 01data.json 01data.json > .jq.output
+	@${QJ} -S --slurp 'sorted(get(), key=lambda x: int(x["age"]))' 01data.json 01data.json > .qj.output
 	diff -u .jq.output .qj.output

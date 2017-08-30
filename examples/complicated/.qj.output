@@ -4,6 +4,14 @@
     "name": "foo"
   },
   {
+    "age": 20,
+    "name": "foo"
+  },
+  {
+    "age": 22,
+    "name": "bar"
+  },
+  {
     "age": 22,
     "name": "bar"
   }

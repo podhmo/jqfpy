@@ -12,7 +12,7 @@ defaut: 00 01
 	@jq -S '.paths."~api~bar"' 00data.json > .jq.output0
 	diff -u .jq.output0 .qj.output0
 
-# --slurp, --unbuffered
+# --slurp
 01:
 	rm 	-f .jq.output11 .qj.output11
 	@echo "--one file----------------------------------------"
@@ -31,7 +31,7 @@ defaut: 00 01
 	diff -u .jq.output1 .qj.output1
 
 	@echo "--one file slurp----------------------------------------"
-	@jq . -M -S --slurp 'sort_by(.age)' 01data.json > .jq.output1
+	@jq -M -S --slurp 'sort_by(.age)' 01data.json > .jq.output1
 	@${QJ} -S --slurp 'sorted(get(), key=lambda x: int(x["age"]))' 01data.json > .qj.output1
 	diff -u .jq.output1 .qj.output1
 
@@ -40,7 +40,7 @@ defaut: 00 01
 	@${QJ} -S --slurp 'sorted(get(), key=lambda x: int(x["age"]))' 01data.json 01data.json > .qj.output1
 	diff -u .jq.output1 .qj.output1
 
-# buffered
+# --buffered, --unbuffered
 02:
 	rm 	-f .jq.output2 .qj.output2
 	@echo "--buffered----------------------------------------"
@@ -62,3 +62,8 @@ defaut: 00 01
 	@(python gen.py | jq . --slurp --unbuffered | cat ) > .jq.output2 2>&1
 	@(python gen.py | ${QJ} 'get()' --slurp | cat ) > .qj.output2 2>&1
 	diff -u .jq.output2 .qj.output2
+
+# broken json
+03:
+	${QJ} "get()" 03data.json
+

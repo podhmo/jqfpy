@@ -1,6 +1,64 @@
 QJ = python -m jqfpy
 
-00:
-	${QJ} 'get("paths/~1api~1foo")' 00data.json
-	${QJ} 'get("paths/~0api~0bar")' 00data.json
+defaut: 00 01
 
+# json pointer
+00:
+	rm 	-f .jq.output0 .qj.output0
+	@${QJ} -S 'get("paths/~1api~1foo")' 00data.json > .qj.output0
+	@jq -S '.paths."/api/foo"' 00data.json > .jq.output0
+	diff -u .jq.output0 .qj.output0
+	@${QJ} 'get("paths/~0api~0bar")' 00data.json > .qj.output0
+	@jq -S '.paths."~api~bar"' 00data.json > .jq.output0
+	diff -u .jq.output0 .qj.output0
+
+# --slurp, --unbuffered
+01:
+	rm 	-f .jq.output11 .qj.output11
+	@echo "--one file----------------------------------------"
+	@jq . -M -S -c 01data.json > .jq.output1
+	@${QJ} -S -c 'get()' 01data.json | sed 's/\([:,]\) /\1/g' > .qj.output1
+	diff -u .jq.output1 .qj.output1
+
+	@echo "--two files----------------------------------------"
+	@jq -M -S -c . 01data.json 01data.json > .jq.output1
+	@${QJ} -S -c 'get()' 01data.json 01data.json | sed 's/\([:,]\) /\1/g' > .qj.output1
+	diff -u .jq.output1 .qj.output1
+
+	@echo "--two files and stdin----------------------------------------"
+	@cat 01data.json | jq -M -S -c . 01data.json 01data.json > .jq.output1
+	@cat 01data.json | ${QJ} -S -c 'get()' 01data.json 01data.json | sed 's/\([:,]\) /\1/g' > .qj.output1
+	diff -u .jq.output1 .qj.output1
+
+	@echo "--one file slurp----------------------------------------"
+	@jq . -M -S --slurp 'sort_by(.age)' 01data.json > .jq.output1
+	@${QJ} -S --slurp 'sorted(get(), key=lambda x: int(x["age"]))' 01data.json > .qj.output1
+	diff -u .jq.output1 .qj.output1
+
+	@echo "--two files slurp----------------------------------------"
+	@jq -M -S --slurp 'sort_by(.age)' 01data.json 01data.json > .jq.output1
+	@${QJ} -S --slurp 'sorted(get(), key=lambda x: int(x["age"]))' 01data.json 01data.json > .qj.output1
+	diff -u .jq.output1 .qj.output1
+
+# buffered
+02:
+	rm 	-f .jq.output2 .qj.output2
+	@echo "--buffered----------------------------------------"
+	@(python gen.py | jq . | cat ) > .jq.output2 2>&1
+	@(python gen.py | ${QJ} --buffered 'get()' | cat ) > .qj.output2 2>&1
+	diff -u .jq.output2 .qj.output2
+
+	@echo "--unbuffered----------------------------------------"
+	@(python gen.py | jq . --unbuffered | cat ) > .jq.output2 2>&1
+	@(python gen.py | ${QJ} 'get()' | cat ) > .qj.output2 2>&1
+	diff -u .jq.output2 .qj.output2
+
+	@echo "--buffered slurp----------------------------------------"
+	@(python gen.py | jq . --slurp | cat ) > .jq.output2 2>&1
+	@(python gen.py | ${QJ} 'get()' --slurp --buffered | cat ) > .qj.output2 2>&1
+	diff -u .jq.output2 .qj.output2
+
+	@echo "--unbuffered slurp----------------------------------------"
+	@(python gen.py | jq . --slurp --unbuffered | cat ) > .jq.output2 2>&1
+	@(python gen.py | ${QJ} 'get()' --slurp | cat ) > .qj.output2 2>&1
+	diff -u .jq.output2 .qj.output2

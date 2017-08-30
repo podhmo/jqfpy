@@ -59,10 +59,10 @@ def main():
     with gentle_error_reporting(pycode, fp):
         transform_fn = jqfpy.exec_pycode(fnname, pycode)
 
-    if is_fd_alive(args.input):
-        files = [args.input]
-    elif args.file:
+    if args.file:
         files = args.file[:]
+    elif is_fd_alive(args.input):
+        files = [args.input]
     else:
         parser.print_help()
         sys.exit(0)

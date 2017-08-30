@@ -18,6 +18,11 @@ QJ = python -m jqfpy
 	@${QJ} -S -c 'get()' 01data.json 01data.json | sed 's/\([:,]\) /\1/g' > .qj.output
 	diff -u .jq.output .qj.output
 
+	@echo "--two files and stdin----------------------------------------"
+	@cat 01data.json | jq -M -S -c . 01data.json 01data.json > .jq.output
+	@cat 01data.json | ${QJ} -S -c 'get()' 01data.json 01data.json | sed 's/\([:,]\) /\1/g' > .qj.output
+	diff -u .jq.output .qj.output
+
 	@echo "--one file slurp----------------------------------------"
 	@jq . -M -S --slurp 01data.json > .jq.output
 	@${QJ} -S --slurp 'get()' 01data.json > .qj.output

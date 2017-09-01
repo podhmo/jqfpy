@@ -54,16 +54,16 @@ def main():
     args = parser.parse_args()
 
     fnname = "_transform"
-    pycode = jqfpy.create_pycode(fnname, args.code)
+    if not args.file and os.path.exists(args.code):
+        args.file.append(open(args.code))
+        args.code = "get()"
 
+    pycode = jqfpy.create_pycode(fnname, args.code)
     fp = sys.stdout
 
     if args.show_code_only:
         _describe_pycode(pycode, fp=fp, indent="")
         sys.exit(0)
-
-    with gentle_error_reporting(pycode, fp):
-        transform_fn = jqfpy.exec_pycode(fnname, pycode)
 
     if args.file:
         files = args.file[:]
@@ -72,6 +72,9 @@ def main():
     else:
         parser.print_help()
         sys.exit(0)
+
+    with gentle_error_reporting(pycode, fp):
+        transform_fn = jqfpy.exec_pycode(fnname, pycode)
 
     def _load(streams):
         for stream in streams:

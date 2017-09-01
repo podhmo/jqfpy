@@ -1,6 +1,6 @@
 QJ = python -m jqfpy
 
-defaut: 00 01
+defaut: 00 01 02 03
 
 # json pointer
 00:

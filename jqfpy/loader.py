@@ -12,13 +12,12 @@ def load(stream):
             body = "\n".join(buf)
             if len(body.strip()) > 0:
                 d = json.loads(body)
+                first_err = None
+                yield d
+                buf.clear()
         except json.JSONDecodeError as e:
             if first_err is None:
                 first_err = e
-        else:
-            first_err = None
-            yield d
-            buf.clear()
 
     if first_err is not None:
         raise first_err

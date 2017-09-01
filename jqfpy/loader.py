@@ -9,7 +9,9 @@ def load(stream):
     for line in stream:
         buf.append(line)
         try:
-            d = json.loads("\n".join(buf))
+            body = "\n".join(buf)
+            if len(body.strip()) > 0:
+                d = json.loads(body)
         except json.JSONDecodeError as e:
             if first_err is None:
                 first_err = e

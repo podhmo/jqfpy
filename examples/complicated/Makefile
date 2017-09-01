@@ -76,3 +76,7 @@ defaut: 00 01
 	@echo "--broken 2json with slurp ---------------------------------"
 	${QJ} --slurp "get()" 04data.json > .qj.output3 2>&1 || exit 0
 	test -n "`grep JSONDecodeError .qj.output3`"
+
+	@echo "--no broken---------------------------------"
+	${QJ} --slurp "get()" 05data.json > .qj.output3 2>&1 || exit 0
+	test -z "`grep JSONDecodeError .qj.output3`"

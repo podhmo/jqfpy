@@ -102,9 +102,10 @@ def main():
             r = jqfpy.transform(transform_fn, d)
         _dump(r)
     else:
-        for d in _load(files):
-            r = jqfpy.transform(transform_fn, d)
-            _dump(r)
+        with gentle_error_reporting(pycode, fp):
+            for d in _load(files):
+                r = jqfpy.transform(transform_fn, d)
+                _dump(r)
     fp.flush()
 
 

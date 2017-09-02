@@ -63,6 +63,16 @@ defaut: 00 01 02 03
 	@(python gen.py | ${QJ} --unbuffered 'get()' --slurp | cat ) > .qj.output23 2>&1
 	diff -u .jq.output23 .qj.output23
 
+	@echo "--buffered2----------------------------------------"
+	@(cat 06data.json | jq . --slurp | cat ) > .jq.output24 2>&1
+	@(cat 06data.json | ${QJ} 'get()' --slurp --buffered | cat ) > .qj.output24 2>&1
+	diff -u .jq.output24 .qj.output24
+
+	@echo "--unbuffered2----------------------------------------"
+	@(cat 06data.json | jq . --slurp --unbuffered | cat ) > .jq.output25 2>&1
+	@(cat 06data.json | ${QJ} --unbuffered 'get()' --slurp | cat ) > .qj.output25 2>&1
+	diff -u .jq.output25 .qj.output25
+
 # broken json
 03:
 	@echo "--broken 1json---------------------------------"

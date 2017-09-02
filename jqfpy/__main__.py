@@ -46,7 +46,7 @@ def main():
 
     parser.add_argument("--buffered", action="store_true", dest="buffered")
     parser.add_argument("--unbuffered", action="store_false", dest="buffered")
-    parser.set_defaults(buffered=False)
+    parser.set_defaults(buffered=True)
 
     parser.add_argument("--squash", action="store_true")
     parser.add_argument("--show-code-only", action="store_true")
@@ -78,7 +78,7 @@ def main():
 
     def _load(streams):
         for stream in streams:
-            for d in loader.load(stream):
+            for d in loader.load(stream, buffered=args.buffered):
                 yield d
 
     def _dump(d):

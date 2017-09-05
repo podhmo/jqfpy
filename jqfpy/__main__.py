@@ -37,6 +37,7 @@ def main():
     parser.add_argument("code", nargs="?", default="get()")
     parser.add_argument("file", nargs="*", type=argparse.FileType("r"))
     parser.add_argument("--input", type=argparse.FileType("r"), default=sys.stdin)
+    parser.add_argument("-f", "--format", choices=["json", "yaml"], default="json")
     parser.add_argument("-c", "--compact-output", action="store_true")
     parser.add_argument("-s", "--slurp", action="store_true")
     parser.add_argument("-S", "--sort-keys", action="store_true")
@@ -75,7 +76,7 @@ def main():
     with gentle_error_reporting(pycode, fp):
         transform_fn = jqfpy.exec_pycode(fnname, pycode)
 
-    m = loading.get_module("json")
+    m = loading.get_module(args.format)
 
     def _load(streams):
         for stream in streams:

@@ -3,8 +3,7 @@ import sys
 import contextlib
 import argparse
 import jqfpy
-import jqfpy.loader as loader
-import jqfpy.dumper as dumper
+from jqfpy import loading
 
 
 def _describe_pycode(pycode, *, indent="", fp=sys.stderr):
@@ -76,13 +75,15 @@ def main():
     with gentle_error_reporting(pycode, fp):
         transform_fn = jqfpy.exec_pycode(fnname, pycode)
 
+    m = loading.get_module("json")
+
     def _load(streams):
         for stream in streams:
-            for d in loader.load(stream, buffered=args.buffered):
+            for d in m.load(stream, buffered=args.buffered):
                 yield d
 
     def _dump(d):
-        dumper.dump(
+        m.dump(
             d,
             fp=fp,
             squash=args.squash,

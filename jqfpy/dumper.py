@@ -13,7 +13,7 @@ def dump(
 
     def _dump(d):
         if raw and isinstance(d, str):
-            print(d)
+            print(d, file=fp)
         else:
             json.dump(d, fp=fp, **opts)
             print(file=fp)

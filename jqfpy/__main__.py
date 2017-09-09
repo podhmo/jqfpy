@@ -14,7 +14,7 @@ def is_fd_alive(fd):
     if os.name == 'nt':
         return not os.isatty(fd.fileno())
     import select
-    return bool(select.select([fd], [], [], 0.00)[0])
+    return bool(select.select([fd], [], [], 0.07)[0])
 
 
 @contextlib.contextmanager

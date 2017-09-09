@@ -1,4 +1,5 @@
 import os.path
+import sys
 
 
 class Repository:
@@ -54,8 +55,16 @@ def json():
 
 @_repo.register(".yaml", ".yml")
 def yaml():
-    from . import _yaml as m
-    m.SEPARATOR = "---\n"
+    try:
+        from . import _yaml as m
+        m.SEPARATOR = "---\n"
+    except ImportError:
+        fp = sys.stderr
+        print(
+            "\x1b[33m\x1b[1myaml module is not found. please install via \n  pip install 'jqfpy[yaml]'\x1b[0m",
+            file=fp
+        )
+        sys.exit(1)
     return m
 
 

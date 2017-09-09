@@ -17,6 +17,10 @@ install_requires = []
 
 docs_extras = []
 
+yaml_extras = [
+    "PyYAML",
+]
+
 tests_require = []
 
 testing_extras = tests_require + []
@@ -44,6 +48,7 @@ setup(
     install_requires=install_requires,
     extras_require={
         'testing': testing_extras,
+        'yaml': yaml_extras,
         'docs': docs_extras,
     },
     tests_require=tests_require,

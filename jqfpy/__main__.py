@@ -3,8 +3,7 @@ import sys
 import contextlib
 import argparse
 import jqfpy
-import jqfpy.loader as loader
-import jqfpy.dumper as dumper
+from jqfpy import loading
 
 
 def _describe_pycode(pycode, *, indent="", fp=sys.stderr):
@@ -15,7 +14,7 @@ def is_fd_alive(fd):
     if os.name == 'nt':
         return not os.isatty(fd.fileno())
     import select
-    return bool(select.select([fd], [], [], 0)[0])
+    return bool(select.select([fd], [], [], 0.00)[0])
 
 
 @contextlib.contextmanager
@@ -37,7 +36,10 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("code", nargs="?", default="get()")
     parser.add_argument("file", nargs="*", type=argparse.FileType("r"))
-    parser.add_argument("--input", type=argparse.FileType("r"), default=sys.stdin)
+    parser.add_argument("--force-stdin", action="store_true")
+    parser.add_argument("-i", "--input-format", choices=["json", "yaml"], default="json")
+    parser.add_argument("-o", "--output-format", choices=["json", "yaml"], default="json")
+
     parser.add_argument("-c", "--compact-output", action="store_true")
     parser.add_argument("-s", "--slurp", action="store_true")
     parser.add_argument("-S", "--sort-keys", action="store_true")
@@ -67,8 +69,8 @@ def main():
 
     if args.file:
         files = args.file[:]
-    elif is_fd_alive(args.input):
-        files = [args.input]
+    elif args.force_stdin or is_fd_alive(sys.stdin):
+        files = [sys.stdin]
     else:
         parser.print_help()
         sys.exit(0)
@@ -78,16 +80,20 @@ def main():
 
     def _load(streams):
         for stream in streams:
-            for d in loader.load(stream, buffered=args.buffered):
+            m = loading.get_module(stream, default_format=args.input_format)
+            for d in m.load(stream, buffered=args.buffered):
                 yield d
 
-    def _dump(d):
-        dumper.dump(
+    def _dump(d, *, i):
+        m = loading.get_module(fp, default_format=args.output_format)
+        if i > 0 and m.SEPARATOR:
+            fp.write(m.SEPARATOR)
+        m.dump(
             d,
             fp=fp,
             squash=args.squash,
             raw=args.raw_output,
-            json_kwargs=dict(
+            extra_kwargs=dict(
                 indent=None if args.compact_output else 2,
                 sort_keys=args.sort_keys,
                 ensure_ascii=args.ascii_output,
@@ -100,12 +106,12 @@ def main():
         d = list(_load(files))
         with gentle_error_reporting(pycode, fp):
             r = jqfpy.transform(transform_fn, d)
-        _dump(r)
+        _dump(r, i=0)
     else:
         with gentle_error_reporting(pycode, fp):
-            for d in _load(files):
+            for i, d in enumerate(_load(files)):
                 r = jqfpy.transform(transform_fn, d)
-                _dump(r)
+                _dump(r, i=i)
     fp.flush()
 
 

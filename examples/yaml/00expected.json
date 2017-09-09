@@ -1,0 +1,11 @@
+{
+  "person": {
+    "age": 20,
+    "name": "foo",
+    "skills": [
+      "x",
+      "y",
+      "z"
+    ]
+  }
+}

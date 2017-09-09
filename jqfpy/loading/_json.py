@@ -50,8 +50,8 @@ def _load_buffered(stream):
         yield ob
 
 
-def dump(d, fp, *, squash=False, raw=False, json_kwargs=None):
-    opts = json_kwargs or dict(sort_keys=False, ensure_ascii=False)
+def dump(d, fp, *, squash=False, raw=False, extra_kwargs=None):
+    opts = extra_kwargs or dict(sort_keys=False, ensure_ascii=False)
 
     def _dump(d):
         if raw and isinstance(d, str):

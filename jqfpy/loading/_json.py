@@ -55,7 +55,7 @@ def dump(d, fp, *, squash=False, raw=False, extra_kwargs=None):
 
     def _dump(d):
         if raw and isinstance(d, str):
-            print(d)
+            print(d, file=fp)
         else:
             json.dump(d, fp=fp, **opts)
             print(file=fp)

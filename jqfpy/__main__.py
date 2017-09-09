@@ -10,13 +10,6 @@ def _describe_pycode(pycode, *, indent="", fp=sys.stderr):
     print(indent + pycode.replace("\n", "\n" + indent), file=fp)
 
 
-def is_fd_alive(fd):
-    if os.name == 'nt':
-        return not os.isatty(fd.fileno())
-    import select
-    return bool(select.select([fd], [], [], 0.07)[0])
-
-
 @contextlib.contextmanager
 def gentle_error_reporting(pycode, fp):
     try:
@@ -36,7 +29,6 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("code", nargs="?", default="get()")
     parser.add_argument("file", nargs="*", type=argparse.FileType("r"))
-    parser.add_argument("--force-stdin", action="store_true")
     parser.add_argument("-i", "--input-format", choices=["json", "yaml"], default="json")
     parser.add_argument("-o", "--output-format", choices=["json", "yaml"], default="json")
 
@@ -69,11 +61,8 @@ def main():
 
     if args.file:
         files = args.file[:]
-    elif args.force_stdin or is_fd_alive(sys.stdin):
-        files = [sys.stdin]
     else:
-        parser.print_help()
-        sys.exit(0)
+        files = [sys.stdin]
 
     with gentle_error_reporting(pycode, fp):
         transform_fn = jqfpy.exec_pycode(fnname, pycode)

@@ -1,3 +1,6 @@
+from jqfpy.helpermodule import HelperModule
+
+
 missing = object()
 
 
@@ -37,7 +40,7 @@ def normalize_json_pointer(ref):
 
 
 def create_pycode(fnname, code):
-    lines = ["def {}(get):".format(fnname)]
+    lines = ["def {}(get, h=None):".format(fnname)]
     lines.extend([line.strip() for line in code.split(";")])
     lines[-1] = "return {}".format(lines[-1])
     pycode = "\n    ".join(lines)
@@ -51,4 +54,5 @@ def exec_pycode(fnname, pycode):
 
 
 def transform(fn, d):
-    return fn(Getter(d).get)
+    getter = Getter(d)
+    return fn(getter, h=HelperModule(getter))

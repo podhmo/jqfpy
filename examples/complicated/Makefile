@@ -44,32 +44,32 @@ defaut: 00 01 02 03
 02:
 	rm 	-f .jq.output2* .qj.output2*
 	@echo "--buffered----------------------------------------"
-	@(python gen.py | jq . | cat ) > .jq.output20 2>&1
+	@(python gen.py | jq -S . | cat ) > .jq.output20 2>&1
 	@(python gen.py | ${QJ} --buffered 'get()' | cat ) > .qj.output20 2>&1
 	diff -u .jq.output20 .qj.output20
 
 	@echo "--unbuffered----------------------------------------"
-	@(python gen.py | jq . --unbuffered | cat ) > .jq.output21 2>&1
+	@(python gen.py | jq -S . --unbuffered | cat ) > .jq.output21 2>&1
 	@(python gen.py | ${QJ} --unbuffered 'get()' | cat ) > .qj.output21 2>&1
 	diff -u .jq.output21 .qj.output21
 
 	@echo "--buffered slurp----------------------------------------"
-	@(python gen.py | jq . --slurp | cat ) > .jq.output22 2>&1
+	@(python gen.py | jq -S . --slurp | cat ) > .jq.output22 2>&1
 	@(python gen.py | ${QJ} 'get()' --slurp --buffered | cat ) > .qj.output22 2>&1
 	diff -u .jq.output22 .qj.output22
 
 	@echo "--unbuffered slurp----------------------------------------"
-	@(python gen.py | jq . --slurp --unbuffered | cat ) > .jq.output23 2>&1
+	@(python gen.py | jq -S . --slurp --unbuffered | cat ) > .jq.output23 2>&1
 	@(python gen.py | ${QJ} --unbuffered 'get()' --slurp | cat ) > .qj.output23 2>&1
 	diff -u .jq.output23 .qj.output23
 
 	@echo "--buffered2----------------------------------------"
-	@(cat 06data.json | jq . --slurp | cat ) > .jq.output24 2>&1
+	@(cat 06data.json | jq -S . --slurp | cat ) > .jq.output24 2>&1
 	@(cat 06data.json | ${QJ} 'get()' --slurp --buffered | cat ) > .qj.output24 2>&1
 	diff -u .jq.output24 .qj.output24
 
 	@echo "--unbuffered2----------------------------------------"
-	@(cat 06data.json | jq . --slurp --unbuffered | cat ) > .jq.output25 2>&1
+	@(cat 06data.json | jq -S . --slurp --unbuffered | cat ) > .jq.output25 2>&1
 	@(cat 06data.json | ${QJ} --unbuffered 'get()' --slurp | cat ) > .qj.output25 2>&1
 	diff -u .jq.output25 .qj.output25
 

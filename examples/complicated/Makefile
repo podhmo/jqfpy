@@ -1,4 +1,4 @@
-QJ = python -m jqfpy
+QJ = python -m jqfpy -S
 
 defaut: 00 01 02 03
 

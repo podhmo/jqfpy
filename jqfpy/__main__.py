@@ -43,7 +43,7 @@ def main():
     parser.set_defaults(buffered=True)
 
     parser.add_argument("--squash", action="store_true")
-    parser.add_argument("--show-code-only", action="store_true")
+    parser.add_argument("--show-code", action="store_true")
 
     args = parser.parse_args()
 
@@ -55,7 +55,7 @@ def main():
     pycode = jqfpy.create_pycode(fnname, args.code)
     fp = sys.stdout
 
-    if args.show_code_only:
+    if args.show_code:
         _describe_pycode(pycode, fp=fp, indent="")
         sys.exit(0)
 

@@ -1,0 +1,3 @@
+msg:single line	description:hai	level:info
+msg:multi line	description:foo\nbar\nboo\n	level:info
+msg:single line	description:hai	level:info

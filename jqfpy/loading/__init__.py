@@ -68,5 +68,12 @@ def yaml():
     return m
 
 
+@_repo.register(".ltsv")
+def ltsv():
+    from . import _ltsv as m
+    m.SEPARATOR = None
+    return m
+
+
 register = _repo.register
 get_module = Dispatcher(_repo).dispatch

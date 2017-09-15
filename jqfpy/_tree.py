@@ -1,7 +1,7 @@
 from collections import OrderedDict
 
 
-class Tree:
+class Node:
     def __init__(self):
         self.children = OrderedDict()
         self.leafs = set()
@@ -19,7 +19,7 @@ class Tree:
 
 
 def build_tree(L):
-    t = Tree()
+    t = Node()
 
     for ks in L:
         cursor = t

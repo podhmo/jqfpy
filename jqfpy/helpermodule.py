@@ -11,12 +11,23 @@ class HelperModule:
     def d(self):
         return self.getter.d
 
-    # todo: nested
+    def _make_dict(self, items):
+        items = list(items)
+        d = self.factory()
+        for raw_k, v in items:
+            cursor = d
+            ks = self.getter.split_keys(raw_k)
+            for k in ks[:-1]:
+                if k not in cursor:
+                    cursor[k] = self.factory()
+                cursor = cursor[k]
+            cursor[ks[-1]] = v
+        return d
 
     def pick(self, ks, *, d=None, default=None):
         d = d or self.d
-        return self.factory((k, d.get(k, default)) for k in ks)
+        return self._make_dict((k, self.getter.get(k, d=d, default=default)) for k in ks)
 
     def omit(self, ks, *, d=None):
         d = d or self.d
-        return self.factory((k, d[k]) for k in list(d.keys()) if k not in ks)
+        return self._make_dict((k, self.getter.get(k, d=d)) for k in list(d.keys()) if k not in ks)

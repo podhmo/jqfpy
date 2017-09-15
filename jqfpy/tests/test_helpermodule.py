@@ -7,8 +7,8 @@ class HelperModuleTests(unittest.TestCase):
         return HelperModule
 
     def _makeOne(self, d, *, factory):
-        from jqfpy import Getter
-        return self._getTarget()(Getter(d), factory=factory)
+        from jqfpy import Accessor
+        return self._getTarget()(Accessor(d), factory=factory)
 
     def test_pick(self):
         d = {
@@ -27,6 +27,9 @@ class HelperModuleTests(unittest.TestCase):
             (["x/y0"], {"x": {"y0": {"z00": 10, "z01": 11}}}),
             (["x/y0/z00"], {"x": {"y0": {"z00": 10}}}),
             (["x/y0/z00", "x/y1/z10"], {"x": {"y0": {"z00": 10}, "y1": {"z10": 100}}}),
+            (["x/y0/z00@z0", "x/y1/z11@z1"], {"z0": 10, "z1": 101}),
+            (["x/y0@y0", "x/y1@y1"], {"y0": {"z00": 10, "z01": 11}, "y1": {"z10": 100, "z11": 101}}),
+            (["x/y0/z00@y/z0", "x/y1/z11@y/z1"], {"y": {"z0": 10, "z1": 101}}),
         ]
         for keys, expected in candidates:
             with self.subTest(keys=keys):
@@ -48,7 +51,7 @@ class HelperModuleTests(unittest.TestCase):
             (["a", "x"], {"b": 2, "c": 3, "d": 4, "e": 5}),
             (["a", "c", "e", "x"], {"b": 2, "d": 4}),
             (["a", "b", "c", "d", "e"], {"x": d["x"]}),
-            (["a", "b", "c", "d", "e", "x/y1"], {"x": {"y0": {"z00": 10, "z01": 11}}}),
+            # (["a", "b", "c", "d", "e", "x/y1"], {"x": {"y0": {"z00": 10, "z01": 11}}}),
         ]
         for keys, expected in candidates:
             with self.subTest(keys=keys):

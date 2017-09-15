@@ -3,8 +3,8 @@ import unittest
 
 class GetTests(unittest.TestCase):
     def _makeOne(self, d):
-        from jqfpy import Getter
-        return Getter(d)
+        from jqfpy import Accessor
+        return Accessor(d)
 
     def test_rootdoc(self):
         d = {"person": {"name": "foo", "age": 20}}

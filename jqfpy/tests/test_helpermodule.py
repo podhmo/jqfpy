@@ -51,7 +51,9 @@ class HelperModuleTests(unittest.TestCase):
             (["a", "x"], {"b": 2, "c": 3, "d": 4, "e": 5}),
             (["a", "c", "e", "x"], {"b": 2, "d": 4}),
             (["a", "b", "c", "d", "e"], {"x": d["x"]}),
-            # (["a", "b", "c", "d", "e", "x/y1"], {"x": {"y0": {"z00": 10, "z01": 11}}}),
+            (["a", "b", "c", "d", "e", "x/y1"], {"x": {"y0": {"z00": 10, "z01": 11}}}),
+            (["a", "b", "c", "d", "e", "x/y1", "x/y2"], {"x": {"y0": {"z00": 10, "z01": 11}}}),
+            (["a", "b", "c", "d", "e", "x/y1", "x/y2", "x/y0/z01"], {"x": {"y0": {"z00": 10}}}),
         ]
         for keys, expected in candidates:
             with self.subTest(keys=keys):

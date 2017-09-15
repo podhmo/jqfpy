@@ -1,19 +1,22 @@
 missing = object()
 
 
-class Accessor:
-    def __init__(self, d):
-        self.d = d
-
-    def _split_key(self, k, *, sep="/"):
+class Splitter:
+    def split_key(self, k, *, sep="/"):
         return [normalize_json_pointer(x) for x in k.split(sep)]
 
-    def _split_key_pair(self, k, *, sep="@"):
+    def split_key_pair(self, k, *, sep="@"):
         if sep not in k:
-            return self._split_key(k), []
+            return self.split_key(k), []
         else:
             access_keys, build_keys = k.split(sep, 1)
-            return self._split_key(access_keys), self._split_key(build_keys)
+            return self.split_key(access_keys), self.split_key(build_keys)
+
+
+class Accessor:
+    def __init__(self, d, splitter=Splitter()):
+        self.d = d
+        self.splitter = splitter
 
     def get(self, k=None, d=None, default=None):
         d = d or self.d
@@ -24,8 +27,11 @@ class Accessor:
 
     __call__ = get
 
+    def get_keys_pair(self, k):
+        return self.splitter.split_key_pair(k)
+
     def access(self, k, d, default=None):
-        access_keys, build_keys = self._split_key_pair(k)
+        access_keys, build_keys = self.get_keys_pair(k)
         for k in access_keys:
             if k.isdecimal():
                 k = int(k)

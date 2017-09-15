@@ -1,4 +1,5 @@
 from collections import OrderedDict
+from . import _tree as tree
 
 
 # todo: dynamic loading via option
@@ -11,7 +12,7 @@ class HelperModule:
     def d(self):
         return self.accessor.d
 
-    def _make_dict(self, triples):
+    def _build_dict(self, triples):
         d = self.factory()
         for access_keys, build_keys, v in triples:
             cursor = d
@@ -27,8 +28,27 @@ class HelperModule:
 
     def pick(self, ks, *, d=None, default=None):
         d = d or self.d
-        return self._make_dict(self.accessor.access(k, d=d, default=default) for k in ks)
+        return self._build_dict(self.accessor.access(k, d=d, default=default) for k in ks)
 
     def omit(self, ks, *, d=None):
         d = d or self.d
-        return self._make_dict(self.accessor.access(k, d=d) for k in list(d.keys()) if k not in ks)
+        access_keys_list = []
+        for k in ks:
+            access_keys, _ = self.accessor.get_keys_pair(k)
+            access_keys_list.append(access_keys)
+
+        t = tree.build_tree(access_keys_list)
+        return self._build_dict(self._omit_access(d, t, []))
+
+    def _omit_access(self, d, t, hist):
+        for k in d.keys():
+            if k in t:
+                hist.append(k)
+                yield from self._omit_access(d[k], t.children[k], hist=hist)
+                hist.pop()
+            elif k in t.leafs:
+                continue
+            else:
+                hist.append(k)
+                yield hist[:], [], d[k]
+                hist.pop()

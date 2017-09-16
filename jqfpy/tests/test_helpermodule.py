@@ -34,7 +34,7 @@ class HelperModuleTests(unittest.TestCase):
         for keys, expected in candidates:
             with self.subTest(keys=keys):
                 target = self._makeOne(d, factory=dict)
-                got = target.pick(keys)
+                got = target.pick(*keys)
                 self.assertEqual(got, expected)
 
     def test_omit(self):
@@ -58,5 +58,5 @@ class HelperModuleTests(unittest.TestCase):
         for keys, expected in candidates:
             with self.subTest(keys=keys):
                 target = self._makeOne(d, factory=dict)
-                got = target.omit(keys)
+                got = target.omit(*keys)
                 self.assertEqual(got, expected)

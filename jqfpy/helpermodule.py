@@ -27,7 +27,7 @@ class HelperModule:
             cursor[build_keys[-1]] = v
         return d
 
-    def pick(self, ks, *, d=None, default=None):
+    def pick(self, *ks, d=None, default=None):
         d = d or self.d
         return self._build_dict(self._pick_gen(ks, d, default))
 
@@ -37,7 +37,7 @@ class HelperModule:
             access_keys, build_keys = self.accessor.split_key_pair(k)
             yield access_keys, build_keys, self.accessor.access(access_keys, d, default=default)
 
-    def omit(self, ks, *, d=None):
+    def omit(self, *ks, d=None):
         d = d or self.d
         t = tree.build_tree([self.accessor.split_key(k) for k in ks])
         return self._build_dict(self._omit_gen(d, t, []))

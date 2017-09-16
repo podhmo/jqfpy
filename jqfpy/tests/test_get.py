@@ -31,6 +31,10 @@ class GetTests(unittest.TestCase):
             ("person/skills/1", {"name": "y"}),
             ("person/skills/1/name", "y"),
             ("person/skills[]/name", ["x", "y", "z"]),
+            ("*/age", 20),
+            ("person/*", d["person"]),
+            ("person/*/name", None),
+            ("person/*[]/name", ["x", "y", "z"]),
         ]
         for k, expected in candidates:
             with self.subTest(k=k):

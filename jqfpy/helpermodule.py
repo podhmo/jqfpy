@@ -4,13 +4,14 @@ from . import _tree as tree
 
 # todo: dynamic loading via option
 class HelperModule:
-    def __init__(self, accessor, *, factory=OrderedDict):
-        self.accessor = accessor
+    def __init__(self, getter, *, factory=OrderedDict):
+        self.getter = getter
+        self.accessor = getter.accessor  # xxx
         self.factory = factory
 
     @property
     def d(self):
-        return self.accessor.d
+        return self.getter.d
 
     def _build_dict(self, triples):
         d = self.factory()
@@ -28,23 +29,29 @@ class HelperModule:
 
     def pick(self, ks, *, d=None, default=None):
         d = d or self.d
-        return self._build_dict(self.accessor.access(k, d=d, default=default) for k in ks)
+        return self._build_dict(self._pick_gen(ks, d, default))
+
+    def _pick_gen(self, ks, d, default):
+        d = d or self.d
+        for k in ks:
+            access_keys, build_keys = self.getter.get_keys_pair(k)
+            yield access_keys, build_keys, self.accessor.access(access_keys, d, default=default)
 
     def omit(self, ks, *, d=None):
         d = d or self.d
         access_keys_list = []
         for k in ks:
-            access_keys, _ = self.accessor.get_keys_pair(k)
+            access_keys, _ = self.getter.get_keys_pair(k)
             access_keys_list.append(access_keys)
 
         t = tree.build_tree(access_keys_list)
-        return self._build_dict(self._omit_access(d, t, []))
+        return self._build_dict(self._omit_gen(d, t, []))
 
-    def _omit_access(self, d, t, hist):
+    def _omit_gen(self, d, t, hist):
         for k in d.keys():
             if k in t:
                 hist.append(k)
-                yield from self._omit_access(d[k], t.children[k], hist=hist)
+                yield from self._omit_gen(d[k], t.children[k], hist=hist)
                 hist.pop()
             elif k in t.leafs:
                 continue

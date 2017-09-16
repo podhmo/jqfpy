@@ -2,6 +2,24 @@ from jqfpy.helpermodule import HelperModule
 from jqfpy.accessor import Accessor
 
 
+class Getter:
+    def __init__(self, d, accessor=Accessor()):
+        self.d = d
+        self.accessor = accessor
+
+    def get_keys_pair(self, k):
+        return self.accessor.split_key_pair(k)
+
+    def get(self, k=None, d=None, default=None):
+        d = d or self.d
+        if k is None:
+            return d
+        access_keys, _ = self.get_keys_pair(k)
+        return self.accessor.access(access_keys, d, default)
+
+    __call__ = get
+
+
 def create_pycode(fnname, code):
     lines = ["def {}(get, h=None):".format(fnname)]
     lines.extend([line.strip() for line in code.split(";")])
@@ -17,5 +35,5 @@ def exec_pycode(fnname, pycode):
 
 
 def transform(fn, d):
-    accessor = Accessor(d)
-    return fn(accessor, h=HelperModule(accessor))
+    getter = Getter(d)
+    return fn(getter, h=HelperModule(getter))

@@ -7,8 +7,8 @@ class HelperModuleTests(unittest.TestCase):
         return HelperModule
 
     def _makeOne(self, d, *, factory):
-        from jqfpy import Accessor
-        return self._getTarget()(Accessor(d), factory=factory)
+        from jqfpy import Getter
+        return self._getTarget()(Getter(d), factory=factory)
 
     def test_pick(self):
         d = {

@@ -34,17 +34,12 @@ class HelperModule:
     def _pick_gen(self, ks, d, default):
         d = d or self.d
         for k in ks:
-            access_keys, build_keys = self.getter.get_keys_pair(k)
+            access_keys, build_keys = self.accessor.split_key_pair(k)
             yield access_keys, build_keys, self.accessor.access(access_keys, d, default=default)
 
     def omit(self, ks, *, d=None):
         d = d or self.d
-        access_keys_list = []
-        for k in ks:
-            access_keys, _ = self.getter.get_keys_pair(k)
-            access_keys_list.append(access_keys)
-
-        t = tree.build_tree(access_keys_list)
+        t = tree.build_tree([self.accessor.split_key(k) for k in ks])
         return self._build_dict(self._omit_gen(d, t, []))
 
     def _omit_gen(self, d, t, hist):

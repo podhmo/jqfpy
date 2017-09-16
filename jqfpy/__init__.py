@@ -7,14 +7,11 @@ class Getter:
         self.d = d
         self.accessor = accessor
 
-    def get_keys_pair(self, k):
-        return self.accessor.split_key_pair(k)
-
     def get(self, k=None, d=None, default=None):
         d = d or self.d
         if k is None:
             return d
-        access_keys, _ = self.get_keys_pair(k)
+        access_keys = self.accessor.split_key(k)
         return self.accessor.access(access_keys, d, default)
 
     __call__ = get

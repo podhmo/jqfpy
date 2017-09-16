@@ -28,7 +28,9 @@ class GetTests(unittest.TestCase):
             ("person/age", 20),
             (":missing", None),
             ("person/skills", d["person"]["skills"]),
-            ("person/skills/1", {"name": "y"}),
+            ("person/skills/1", {
+                "name": "y"
+            }),
             ("person/skills/1/name", "y"),
             ("person/skills[]/name", ["x", "y", "z"]),
             ("*/age", 20),
@@ -41,19 +43,13 @@ class GetTests(unittest.TestCase):
                 self.assertEqual(got, expected)
 
     def test_get2(self):
-        d = {
-            "group": {
-                "x": {
-                    "name": "X"
-                },
-                "y": {
-                    "name": "Y"
-                },
-                "z": {
-                    "name": "Z"
-                },
-            },
-        }
+        from collections import OrderedDict
+        group = OrderedDict()
+        group["x"] = {"name": "X"}
+        group["y"] = {"name": "Y"}
+        group["z"] = {"name": "Z"}
+
+        d = {"group": group}
         target = self._makeOne(d)
 
         candidates = [

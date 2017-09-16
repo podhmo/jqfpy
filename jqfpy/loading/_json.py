@@ -1,6 +1,6 @@
 import json
 from json.decoder import WHITESPACE
-from collections import deque
+from collections import deque, OrderedDict
 
 
 def load(stream, *, buffered=False):
@@ -14,7 +14,7 @@ def _load_unbuffered(stream):
     buf = deque([], maxlen=100)
     first_err = None
 
-    decoder = json.JSONDecoder()
+    decoder = json.JSONDecoder(object_pairs_hook=OrderedDict)
 
     for line in stream:
         buf.append(line)
@@ -38,7 +38,7 @@ def _load_unbuffered(stream):
 def _load_buffered(stream):
     s = stream.read()
     size = len(s)
-    decoder = json.JSONDecoder()
+    decoder = json.JSONDecoder(object_pairs_hook=OrderedDict)
 
     end = 0
     while True:

@@ -13,11 +13,14 @@ class Accessor:
             return self.split_key(access_keys), self.split_key(build_keys)
 
     def access(self, access_keys, d, default=None):
-        for k in access_keys:
-            if k.isdecimal():
-                k = int(k)
+        for i, k in enumerate(access_keys):
+            if k.endswith("[]"):
+                k = k.rstrip("[]")
+                rest_keys = access_keys[i + 1:]
+                return [self.access(rest_keys, e) for e in d[k]]
+            elif k.isdecimal():
                 try:
-                    d = d[k]
+                    d = d[int(k)]
                 except IndexError:
                     return default
             else:

@@ -30,3 +30,4 @@ jq.tutorial.json:
 # jq '[.[] | {message: .commit.message, name: .commit.committer.name, parents: [.parents[].html_url]}]'
 05: jq.tutorial.json
 	cat $< | ${QJ} 'L = get(); [{"message": get("commit/message", d), "name": get("commit/committer/name", d), "parents": [p["html_url"] for p in d["parents"]]} for d in L]'
+	cat $< | ${QJ} 'L = get(); [h.pick("commit/message@message", "commit/committer/name@name", "parents[]/html_url@parents", d=d) for d in L]'

@@ -112,3 +112,85 @@ this is jqfpy version of `jq's Tutorial <https://stedolan.github.io/jq/tutorial/
    jsonDATA | jq '[.[] | {message: .commit.message, name: .commit.committer.name, parents: [.parents[].html_url]}]'
    # jqfpy.
    jsonDATA | 'L = get(); [{"message": get("commit/message", d), "name": get("commit/committer/name", d), "parents": [p["html_url"] for p in d["parents"]]} for d in L]'
+   # or (using h.pick)
+   jsonDATA | 'L = get(); [h.pick("commit/message@message", "commit/committer/name@name", "parents[]/html_url@parents", d=d) for d in L]'
+
+additionals
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+other formats support
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+jqfpy is supporting other formats(but this is experimental feature)
+
+- yaml
+- ltsv
+
+if you want to use yaml supported version. install via below command.
+
+```
+$ pip install jqfpy[yaml]
+```
+
+and calling jqfpy with `--input-format,-i` option and `--output-format,-o` option.
+
+02data.yaml
+
+.. code-block:: yaml
+
+   person:
+     name: foo
+     age: 20
+     nickname: fool
+
+
+.. code-block:: console
+
+   $ cat 02data.yaml | jqfpy -i yaml 'get("person")'
+   {
+     "name": "foo",
+     "age": 20,
+     "nickname": "fool"
+   }
+
+   $ cat 02data.yaml | jqfpy -i yaml -o ltsv 'get("person")'
+   name:foo	age:20	nickname:fool
+
+
+helper functions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+helper functions are included.
+
+- pick()
+- omit()
+
+pick()
+
+.. code-block:: console
+
+   $ cat 02data.yaml | jqfpy -i yaml 'h.pick("person/name", "person/age")'
+   {
+     "person": {
+       "name": "foo",
+       "age": 20
+     }
+   }
+
+   $ cat 02data.yaml | jqfpy -i yaml 'h.pick("person/name@name", "person/age@age")'
+   {
+     "name": "foo",
+     "age": 20
+   }
+
+omit()
+
+.. code-block:: console
+
+   $ cat 02data.yaml | jqfpy -i yaml 'h.omit("person/nickname")'
+   {
+     "person": {
+       "name": "foo",
+       "age": 20
+     }
+   }

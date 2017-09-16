@@ -6,7 +6,7 @@ class GetTests(unittest.TestCase):
         from jqfpy import Getter
         return Getter(d)
 
-    def test_simple_get(self):
+    def test_get(self):
         d = {
             "person": {
                 "name": "foo",
@@ -34,7 +34,30 @@ class GetTests(unittest.TestCase):
             ("*/age", 20),
             ("person/*", d["person"]),
             ("person/*/name", None),
-            ("person/*[]/name", ["x", "y", "z"]),
+        ]
+        for k, expected in candidates:
+            with self.subTest(k=k):
+                got = target.get(k)
+                self.assertEqual(got, expected)
+
+    def test_get2(self):
+        d = {
+            "group": {
+                "x": {
+                    "name": "X"
+                },
+                "y": {
+                    "name": "Y"
+                },
+                "z": {
+                    "name": "Z"
+                },
+            },
+        }
+        target = self._makeOne(d)
+
+        candidates = [
+            ("group/*[]/name", ["X", "Y", "Z"]),
         ]
         for k, expected in candidates:
             with self.subTest(k=k):

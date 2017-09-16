@@ -17,9 +17,9 @@ class Accessor:
                     continue  # on last, no effect
                 else:
                     next_key = access_keys[i + 1]
+                    rest_keys = access_keys[i + 1:]
                     for gk, v in d.items():
                         if hasattr(v, "__contains__") and next_key in v:
-                            rest_keys = access_keys[i + 1:]
                             return self.access(rest_keys, d[gk])
                     return default
             elif k == "*[]":
@@ -27,12 +27,13 @@ class Accessor:
                     continue  # on last, no effect
                 else:
                     next_key = access_keys[i + 1]
+                    rest_keys = access_keys[i + 1:]
+                    candidates = []
                     for gk, v in d.items():
-                        if v and hasattr(v, "__getitem__"):
-                            for e in v:
-                                if hasattr(e, "__contains__") and next_key in e:
-                                    rest_keys = access_keys[i + 1:]
-                                    return [self.access(rest_keys, e) for e in v]
+                        if hasattr(v, "__contains__") and next_key in v:
+                            candidates.append(v)
+                    if candidates:
+                        return [self.access(rest_keys, v) for v in candidates]
                     return default
             elif k.endswith("[]"):
                 k = k.rstrip("[]")

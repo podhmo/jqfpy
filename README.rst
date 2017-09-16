@@ -1,6 +1,9 @@
 jqfpy
 ========================================
 
+.. image:: https://travis-ci.org/podhmo/jqfpy.svg?branch=master
+    :target: https://travis-ci.org/podhmo/jqfpy
+
 jq is too difficult
 ----------------------------------------
 

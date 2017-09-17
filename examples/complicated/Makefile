@@ -76,17 +76,17 @@ defaut: 00 01 02 03
 # broken json
 03:
 	@echo "--broken 1json---------------------------------"
-	${QJ} "get()" 03data.json > .qj.output3 2>&1 || exit 0
-	test -n "`grep JSONDecodeError .qj.output3`"
+	${QJ} "get()" 03data.json > .qj.output30 2>&1 || exit 0
+	test -n "`grep 'JSONDecodeError\|ValueError' .qj.output30`"
 
 	@echo "--broken 2json---------------------------------"
-	${QJ} "get()" 04data.json > .qj.output3 2>&1 || exit 0
-	test -n "`grep JSONDecodeError .qj.output3`"
+	${QJ} "get()" 04data.json > .qj.output31 2>&1 || exit 0
+	test -n "`grep 'JSONDecodeError\|ValueError' .qj.output31`"
 
 	@echo "--broken 2json with slurp ---------------------------------"
-	${QJ} --slurp "get()" 04data.json > .qj.output3 2>&1 || exit 0
-	test -n "`grep JSONDecodeError .qj.output3`"
+	${QJ} --slurp "get()" 04data.json > .qj.output32 2>&1 || exit 0
+	test -n "`grep 'JSONDecodeError\|ValueError' .qj.output32`"
 
 	@echo "--no broken---------------------------------"
-	${QJ} --slurp "get()" 05data.json > .qj.output3 2>&1 || exit 0
-	test -z "`grep JSONDecodeError .qj.output3`"
+	${QJ} --slurp "get()" 05data.json > .qj.output33 2>&1 || exit 0
+	test -z "`grep 'JSONDecodeError\|ValueError' .qj.output33`"

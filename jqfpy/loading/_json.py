@@ -1,6 +1,10 @@
 import json
 from json.decoder import WHITESPACE
 from collections import deque, OrderedDict
+try:
+    from json import JSONDecodeError
+except ImportError:
+    JSONDecodeError = ValueError  # for 3.4
 
 
 def load(stream, *, buffered=False):
@@ -27,7 +31,7 @@ def _load_unbuffered(stream):
                 yield ob
                 buf.clear()
                 buf.append(body[end:])
-        except json.JSONDecodeError as e:
+        except JSONDecodeError as e:
             if first_err is None:
                 first_err = e
 

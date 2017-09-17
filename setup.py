@@ -10,7 +10,9 @@ try:
 except IOError:
     README = CHANGES = ''
 
-install_requires = []
+install_requires = [
+    "magicalimport"
+]
 
 docs_extras = []
 

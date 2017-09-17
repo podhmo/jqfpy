@@ -4,10 +4,16 @@ from . import _tree as tree
 
 # todo: dynamic loading via option
 class HelperModule:
-    def __init__(self, getter, *, factory=OrderedDict):
+    def __init__(self, getter, *, factory=OrderedDict, additionals=None):
         self.getter = getter
         self.accessor = getter.accessor  # xxx
         self.factory = factory
+        self.additionals = additionals
+
+    def __getattr__(self, k):
+        if self.additionals is None:
+            raise AttributeError(k)
+        return getattr(self.additionals, k)
 
     @property
     def d(self):

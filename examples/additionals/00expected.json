@@ -1,0 +1,10 @@
+[
+  {
+    "name": "github.com/Masterminds/vcs",
+    "version": "1.11.0"
+  },
+  {
+    "name": "github.com/boltdb/bolt",
+    "version": "1.0.0"
+  }
+]

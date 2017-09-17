@@ -11,9 +11,9 @@ default: 00 01 02 03
 	diff -u 01expected.json .qj.output1
 
 02:
-	${QJ} 'h.pick(["host", "status"])' 00log.ltsv > .qj.output2
+	${QJ} 'h.pick("host", "status")' 00log.ltsv > .qj.output2
 	diff -u 02expected.json .qj.output2
 
 03:
-	${QJ} 'h.omit(["time", "req", "referer"])' 00log.ltsv > .qj.output3
+	${QJ} 'h.omit("time", "req", "referer")' 00log.ltsv > .qj.output3
 	diff -u 03expected.json .qj.output3

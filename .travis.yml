@@ -7,5 +7,7 @@ python:
   - "3.6-dev" # 3.6 development branch
   - "nightly"
 install:
-  - pip install -e .[testing]
-script: python setup.py test
+  - pip install -e .[testing,yaml]
+script:
+  - python setup.py test
+  - make test

@@ -3,7 +3,7 @@ from jqfpy.accessor import Accessor
 
 
 class Getter:
-    def __init__(self, d, accessor=Accessor()):
+    def __init__(self, d, *, accessor=Accessor()):
         self.d = d
         self.accessor = accessor
 
@@ -31,6 +31,6 @@ def exec_pycode(fnname, pycode):
     return env[fnname]
 
 
-def transform(fn, d):
+def transform(fn, d, *, additionals=None):
     getter = Getter(d)
-    return fn(getter, h=HelperModule(getter))
+    return fn(getter, h=HelperModule(getter, additionals=additionals))

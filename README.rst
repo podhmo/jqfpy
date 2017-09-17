@@ -116,10 +116,10 @@ this is jqfpy version of `jq's Tutorial <https://stedolan.github.io/jq/tutorial/
    $ jsonDATA | 'L = get(); [h.pick("commit/message@message", "commit/committer/name@name", "parents[]/html_url@parents", d=d) for d in L]'
 
 additionals
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 other formats support
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 jqfpy is supporting other formats(but this is experimental feature)
 
@@ -159,7 +159,7 @@ and calling jqfpy with `--input-format,-i` option and `--output-format,-o` optio
 
 
 helper functions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 helper functions are included.
 
@@ -195,3 +195,34 @@ omit()
        "age": 20
      }
    }
+
+individual helper module with --additionals
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+match.py
+
+.. code-block:: python
+
+   import re
+
+
+   def match(rx, text):
+       if text is None:
+           return False
+       return re.search(rx, text)
+
+
+.. code-block:: console
+
+   $ cat examples/additionals/00data.json | jqfpy --additionals=./match.py '[d for d in get("constraint") if h.match("^1\..+", d.get("version"))]' > .qj.output00
+   [
+     {
+       "name": "github.com/Masterminds/vcs",
+       "version": "1.11.0"
+     },
+     {
+       "name": "github.com/boltdb/bolt",
+       "version": "1.0.0"
+     }
+   ]
+

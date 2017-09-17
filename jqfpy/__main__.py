@@ -2,6 +2,7 @@ import os
 import sys
 import contextlib
 import argparse
+import magicalimport
 import jqfpy
 from jqfpy import loading
 
@@ -44,6 +45,7 @@ def main():
 
     parser.add_argument("--squash", action="store_true")
     parser.add_argument("--show-code", action="store_true")
+    parser.add_argument("--additionals")
 
     args = parser.parse_args()
 
@@ -63,6 +65,10 @@ def main():
         files = args.file[:]
     else:
         files = [sys.stdin]
+
+    additionals = None
+    if args.additionals is not None:
+        additionals = magicalimport.import_module(args.additionals)
 
     with gentle_error_reporting(pycode, fp):
         transform_fn = jqfpy.exec_pycode(fnname, pycode)
@@ -94,12 +100,12 @@ def main():
     if args.slurp:
         d = list(_load(files))
         with gentle_error_reporting(pycode, fp):
-            r = jqfpy.transform(transform_fn, d)
+            r = jqfpy.transform(transform_fn, d, additionals=additionals)
         _dump(r, i=0)
     else:
         with gentle_error_reporting(pycode, fp):
             for i, d in enumerate(_load(files)):
-                r = jqfpy.transform(transform_fn, d)
+                r = jqfpy.transform(transform_fn, d, additionals=additionals)
                 _dump(r, i=i)
     fp.flush()
 

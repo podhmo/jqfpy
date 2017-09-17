@@ -1,3 +1,7 @@
+0.4.1
+
+- ordered is default, when json loading
+
 0.4.0
 
 - experimental ltsv support

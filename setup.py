@@ -1,8 +1,5 @@
 # -*- coding:utf-8 -*-
-
 import os
-import sys
-
 from setuptools import setup, find_packages
 here = os.path.abspath(os.path.dirname(__file__))
 try:
@@ -27,7 +24,7 @@ testing_extras = tests_require + []
 
 setup(
     name='jqfpy',
-    version='0.4.0',
+    version='0.4.1',
     description='jq for pythonista',
     long_description=README + '\n\n' + CHANGES,
     classifiers=[

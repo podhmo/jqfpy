@@ -59,7 +59,7 @@ install
 
 .. code-block:: console
 
-  pip install jqfpy
+  $ pip install jqfpy
 
 
 how to use
@@ -77,43 +77,43 @@ this is jqfpy version of `jq's Tutorial <https://stedolan.github.io/jq/tutorial/
 
 .. code-block:: console
 
-   alias jsonDATA="curl 'https://api.github.com/repos/stedolan/jq/commits?per_page=5'"
+   $ alias jsonDATA="curl 'https://api.github.com/repos/stedolan/jq/commits?per_page=5'"
    # jq.
-   jsonDATA | jq '.'
+   $ jsonDATA | jq '.'
    # jqfpy.
-   jsonDATA | jqfpy 'get()'
+   $ jsonDATA | jqfpy 'get()'
 
 .. code-block:: console
 
    # jq.
-   jsonDATA | jq '.[0]'
+   $ jsonDATA | jq '.[0]'
    # jqfpy.
-   jsonDATA | jqfpy 'get()[0]'
+   $ jsonDATA | jqfpy 'get()[0]'
 
 .. code-block:: console
 
    # jq.
-   jsonDATA | jq '.[0] | {message: .commit.message, name: .commit.committer.name}'
+   $ jsonDATA | jq '.[0] | {message: .commit.message, name: .commit.committer.name}'
    # jqfpy.
-   jsonDATA | jqfpy 'd = get()[0]; {"message": get("commit/message", d), "name": get("commit/committer/name", d)}'
+   $ jsonDATA | jqfpy 'd = get()[0]; {"message": get("commit/message", d), "name": get("commit/committer/name", d)}'
    # or
-   jsonDATA | jqfpy '{"message": get("0/commit/message"), "name": get("0/commit/committer/name")}'
+   $ jsonDATA | jqfpy '{"message": get("0/commit/message"), "name": get("0/commit/committer/name")}'
 
 .. code-block:: console
 
    # jq.
-   jsonDATA | jq '.[] | {message: .commit.message, name: .commit.committer.name}'
+   $ jsonDATA | jq '.[] | {message: .commit.message, name: .commit.committer.name}'
    # jqfpy.
-   jsonDATA | jqfpy --squash 'L = get(); [{"message": get("commit/message", d), "name": get("commit/committer/name", d)} for d in L]'
+   $ jsonDATA | jqfpy --squash 'L = get(); [{"message": get("commit/message", d), "name": get("commit/committer/name", d)} for d in L]'
 
 .. code-block:: console
 
    # jq.
-   jsonDATA | jq '[.[] | {message: .commit.message, name: .commit.committer.name, parents: [.parents[].html_url]}]'
+   $ jsonDATA | jq '[.[] | {message: .commit.message, name: .commit.committer.name, parents: [.parents[].html_url]}]'
    # jqfpy.
-   jsonDATA | 'L = get(); [{"message": get("commit/message", d), "name": get("commit/committer/name", d), "parents": [p["html_url"] for p in d["parents"]]} for d in L]'
+   $ jsonDATA | 'L = get(); [{"message": get("commit/message", d), "name": get("commit/committer/name", d), "parents": [p["html_url"] for p in d["parents"]]} for d in L]'
    # or (using h.pick)
-   jsonDATA | 'L = get(); [h.pick("commit/message@message", "commit/committer/name@name", "parents[]/html_url@parents", d=d) for d in L]'
+   $ jsonDATA | 'L = get(); [h.pick("commit/message@message", "commit/committer/name@name", "parents[]/html_url@parents", d=d) for d in L]'
 
 additionals
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -128,9 +128,10 @@ jqfpy is supporting other formats(but this is experimental feature)
 
 if you want to use yaml supported version. install via below command.
 
-```
-$ pip install jqfpy[yaml]
-```
+.. code-block:: console
+
+   $ pip install jqfpy[yaml]
+
 
 and calling jqfpy with `--input-format,-i` option and `--output-format,-o` option.
 

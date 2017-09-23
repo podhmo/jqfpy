@@ -1,4 +1,5 @@
 from collections import OrderedDict
+import itertools as it
 from . import accessor
 from . import _tree as tree
 
@@ -27,6 +28,14 @@ class HelperModule:
     def omit(self, *ks, d=None):
         d = d or self.d
         return omit(d, ks, factory=self.factory, accessor=self.accessor)
+
+    def flatten(self, L, n):
+        for _ in range(n):
+            L = flatten1(L)
+        return L
+
+    def flatten1(self, L):
+        return self.flatten1(L)
 
 
 def _build_dict(triples, *, factory):
@@ -73,3 +82,7 @@ def _omit_gen(d, t, hist):
             hist.append(k)
             yield hist[:], [], d[k]
             hist.pop()
+
+
+def flatten1(L):
+    return list(it.chain.from_iterable(L))

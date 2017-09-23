@@ -1,5 +1,5 @@
+import itertools
 from collections import OrderedDict
-import itertools as it
 from . import accessor
 from . import _tree as tree
 
@@ -29,13 +29,16 @@ class HelperModule:
         d = d or self.d
         return omit(d, ks, factory=self.factory, accessor=self.accessor)
 
-    def flatten(self, L, n):
+    def flatten(self, L, *, n):
         for _ in range(n):
             L = flatten1(L)
         return L
 
     def flatten1(self, L):
-        return self.flatten1(L)
+        return flatten1(L)
+
+    def chunk(self, L, *, n):
+        return list(chunk(L, n=n))
 
 
 def _build_dict(triples, *, factory):
@@ -85,4 +88,15 @@ def _omit_gen(d, t, hist):
 
 
 def flatten1(L):
-    return list(it.chain.from_iterable(L))
+    return list(itertools.chain.from_iterable(L))
+
+
+def chunk(iterable, n):
+    it = iter(iterable)
+    while True:
+        chunk_it = itertools.islice(it, n)
+        try:
+            first_el = next(chunk_it)
+        except StopIteration:
+            return
+        yield tuple(itertools.chain((first_el, ), chunk_it))

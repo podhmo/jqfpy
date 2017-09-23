@@ -60,3 +60,33 @@ class HelperModuleTests(unittest.TestCase):
                 target = self._makeOne(d, factory=dict)
                 got = target.omit(*keys)
                 self.assertEqual(got, expected)
+
+    def test_flatten(self):
+        L = [[[[[1]]]], [[[[2]]]], [[[[3, 4], [5]], [[6]]]]]
+        candidates = [
+            (L, 1, [[[[1]]], [[[2]]], [[[3, 4], [5]], [[6]]]]),
+            (L, 2, [[[1]], [[2]], [[3, 4], [5]], [[6]]]),
+            (L, 3, [[1], [2], [3, 4], [5], [6]]),
+            (L, 4, [1, 2, 3, 4, 5, 6]),
+        ]
+        for L, n, expected in candidates:
+            with self.subTest(L=L, n=n):
+                target = self._makeOne(None, factory=dict)
+                got = target.flatten(L, n=n)
+                self.assertEqual(got, expected)
+
+    def test_chunk(self):
+        L = [1, 2, 3, 4, 5]
+        candidates = [
+            (L, 1, [(1, ), (2, ), (3, ), (4, ), (5,)]),
+            (L, 2, [(1, 2), (3, 4), (5, )]),
+            (L, 3, [(1, 2, 3), (4, 5)]),
+            (L, 4, [(1, 2, 3, 4), (5, )]),
+            (L, 5, [(1, 2, 3, 4, 5)]),
+            (L, 6, [(1, 2, 3, 4, 5)]),
+        ]
+        for L, n, expected in candidates:
+            with self.subTest(L=L, n=n):
+                target = self._makeOne(None, factory=dict)
+                got = list(target.chunk(L, n=n))
+                self.assertEqual(got, expected)

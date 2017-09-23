@@ -1,3 +1,9 @@
+0.4.2
+
+- support python 3.4
+- custom additionals (--additionals option)
+- new helpers -- h.flatten, h.flatten1 and h.chunk
+
 0.4.1
 
 - ordered is default, when json loading

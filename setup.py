@@ -26,7 +26,7 @@ testing_extras = tests_require + []
 
 setup(
     name='jqfpy',
-    version='0.4.1',
+    version='0.4.2',
     description='jq for pythonista',
     long_description=README + '\n\n' + CHANGES,
     classifiers=[

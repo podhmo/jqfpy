@@ -46,6 +46,7 @@ def main():
     parser.add_argument("--squash", action="store_true")
     parser.add_argument("--show-code", action="store_true")
     parser.add_argument("--additionals")
+    parser.add_argument("--run-force", action="store_true")
 
     args = parser.parse_args()
 
@@ -74,9 +75,12 @@ def main():
         transform_fn = jqfpy.exec_pycode(fnname, pycode)
 
     def _load(streams):
+        errport = None
+        if args.run_force:
+            errport = sys.stderr
         for stream in streams:
             m = loading.get_module(stream, default_format=args.input_format)
-            for d in m.load(stream, buffered=args.buffered):
+            for d in m.load(stream, buffered=args.buffered, errport=errport):
                 yield d
 
     def _dump(d, *, i):

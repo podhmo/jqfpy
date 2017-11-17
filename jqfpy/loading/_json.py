@@ -7,7 +7,7 @@ except ImportError:
     JSONDecodeError = ValueError  # for 3.4
 
 
-def load(stream, *, buffered=False):
+def load(stream, *, buffered=False, errport=None):
     if buffered:
         return _load_buffered(stream)
     else:

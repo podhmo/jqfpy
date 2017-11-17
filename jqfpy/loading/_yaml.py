@@ -26,7 +26,7 @@ def _represent_str(dumper, instance):
         return dumper.represent_scalar('tag:yaml.org,2002:str', instance)
 
 
-def load(stream, *, buffered=False):
+def load(stream, *, buffered=False, errport=None):
     return yaml.load_all(stream, Loader=Loader)
 
 

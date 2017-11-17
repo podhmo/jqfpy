@@ -1,9 +1,14 @@
 from collections import OrderedDict
 
 
-def load(stream, *, buffered=False):
+def load(stream, *, buffered=False, errport=None):
     for line in stream:
-        yield OrderedDict(pair.split(":", 1) for pair in line.rstrip("\n\r").split("\t"))
+        try:
+            yield OrderedDict(pair.split(":", 1) for pair in line.rstrip("\n\r").split("\t"))
+        except Exception:
+            if errport is None:
+                raise
+            errport.write(line)
 
 
 def dump(d, fp, *, squash=False, raw=False, extra_kwargs=None):

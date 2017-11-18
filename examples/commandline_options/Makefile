@@ -27,3 +27,8 @@ default: 00 01 02 03 04
 	cat 03data.json | ${QJ} -r 'get("en")'
 	cat 04data.json | ${QJ} --squash
 	cat 04data.json | ${QJ} --squash -r
+
+05:
+	cat 05data.json | ${QJ} -r
+	cat 05data.json | ${QJ} -r --squash
+	cat 05data.json | ${QJ} -r --squash --squash

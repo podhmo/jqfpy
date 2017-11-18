@@ -1,4 +1,5 @@
 from collections import OrderedDict
+from .rec import consume_rec
 
 
 def load(stream, *, buffered=False):
@@ -6,7 +7,7 @@ def load(stream, *, buffered=False):
         yield OrderedDict(pair.split(":", 1) for pair in line.rstrip("\n\r").split("\t"))
 
 
-def dump(d, fp, *, squash=False, raw=False, extra_kwargs=None):
+def dump(d, fp, *, squash_level=0, raw=False, extra_kwargs=None):
     opts = extra_kwargs or dict(sort_keys=False, ensure_ascii=False)
 
     def _dump(d):
@@ -19,8 +20,4 @@ def dump(d, fp, *, squash=False, raw=False, extra_kwargs=None):
                 items = d.items()
             print("\t".join("{}:{}".format(k, v) for k, v in items), file=fp)
 
-    if squash:
-        for line in d:
-            _dump(line)
-    else:
-        _dump(d)
+    consume_rec(d, _dump, n=squash_level)

@@ -1,5 +1,6 @@
 import yaml
 from collections import OrderedDict, defaultdict, ChainMap
+from .rec import consume_rec
 
 
 class Dumper(yaml.Dumper):
@@ -30,20 +31,12 @@ def load(stream, *, buffered=False):
     return yaml.load_all(stream, Loader=Loader)
 
 
-def dump(d, fp, *, squash=False, raw=False, extra_kwargs=None):
+def dump(d, fp, *, squash_level=0, raw=False, extra_kwargs=None):
     extra_kwargs = extra_kwargs or {}
     default_flow_style = extra_kwargs.get("indent", None) is None
     allow_unicode = not extra_kwargs.get("ensure_ascii", False)
-    if squash:
-        for line in d:
-            yaml.dump(
-                line,
-                fp,
-                Dumper=Dumper,
-                allow_unicode=allow_unicode,
-                default_flow_style=default_flow_style
-            )
-    else:
+
+    def _dump(d):
         yaml.dump(
             d,
             fp,
@@ -51,6 +44,8 @@ def dump(d, fp, *, squash=False, raw=False, extra_kwargs=None):
             allow_unicode=allow_unicode,
             default_flow_style=default_flow_style
         )
+
+    consume_rec(d, _dump, n=squash_level)
 
 
 Loader.add_constructor('tag:yaml.org,2002:map', _construct_odict)

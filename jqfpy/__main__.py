@@ -43,7 +43,7 @@ def main():
     parser.add_argument("--unbuffered", action="store_false", dest="buffered")
     parser.set_defaults(buffered=True)
 
-    parser.add_argument("--squash", action="store_true")
+    parser.add_argument("--squash", action="count", default=0)
     parser.add_argument("--show-code", action="store_true")
     parser.add_argument("--additionals")
 
@@ -86,7 +86,7 @@ def main():
         m.dump(
             d,
             fp=fp,
-            squash=args.squash,
+            squash_level=args.squash,
             raw=args.raw_output,
             extra_kwargs=dict(
                 indent=None if args.compact_output else 2,

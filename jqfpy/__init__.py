@@ -12,7 +12,11 @@ class Getter:
         if k is None:
             return d
         access_keys = self.accessor.split_key(k)
-        return self.accessor.access(access_keys, d, default)
+        if access_keys and access_keys[0] == "[]":
+            rest_keys = access_keys[1:]
+            return [self.accessor.access(rest_keys, x, default) for x in d]
+        else:
+            return self.accessor.access(access_keys, d, default)
 
     __call__ = get
 

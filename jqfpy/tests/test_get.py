@@ -59,3 +59,34 @@ class GetTests(unittest.TestCase):
             with self.subTest(k=k):
                 got = target.get(k)
                 self.assertEqual(got, expected)
+
+    def test_get_list(self):
+        d = [
+            {
+                "name": "foo",
+                "skills": [{
+                    "name": "x"
+                }, {
+                    "name": "y"
+                }, {
+                    "name": "z"
+                }]
+            }, {
+                "name": "bar",
+                "skills": [{
+                    "name": "x"
+                }, {
+                    "name": "y"
+                }]
+            }
+        ]
+        target = self._makeOne(d)
+
+        candidates = [
+            ("[]/name", ["foo", "bar"]),
+            ("[]/skills[]/name", [["x", "y", "z"], ["x", "y"]]),
+        ]
+        for k, expected in candidates:
+            with self.subTest(k=k):
+                got = target.get(k)
+                self.assertEqual(got, expected)

@@ -1,4 +1,3 @@
-# -*- coding:utf-8 -*-
 import os
 from setuptools import setup, find_packages
 here = os.path.abspath(os.path.dirname(__file__))
@@ -10,9 +9,7 @@ try:
 except IOError:
     README = CHANGES = ''
 
-install_requires = [
-    "magicalimport"
-]
+install_requires = ["magicalimport"]
 
 docs_extras = []
 
@@ -26,7 +23,7 @@ testing_extras = tests_require + []
 
 setup(
     name='jqfpy',
-    version='0.4.2',
+    version='0.4.3',
     description='jq for pythonista',
     long_description=README + '\n\n' + CHANGES,
     classifiers=[

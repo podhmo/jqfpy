@@ -1,0 +1,51 @@
+{
+  "host": "127.0.0.1",
+  "ident": "-",
+  "referer": "http://www.example.com/start.html",
+  "req": "GET /apache_pb.gif HTTP/1.0",
+  "size": "2326",
+  "status": "200",
+  "time": "[10/Oct/2000:13:55:36 -0700]",
+  "ua": "Mozilla/4.08 [en] (Win98; I ;Nav)",
+  "user": "frank"
+}
+{
+  "host": "127.0.0.1",
+  "ident": "-",
+  "referer": "http://www.example.com/start.html",
+  "req": "GET /apache_pb.gif HTTP/1.0",
+  "size": "2326",
+  "status": "200",
+  "time": "[10/Oct/2000:13:55:37 -0700]",
+  "ua": "Mozilla/4.08 [en] (Win98; I ;Nav)",
+  "user": "frank"
+}
+{
+  "INFO": "requests.packages.urllib3.connectionpool:Starting new HTTP connection (1): httpbin.org"
+}
+{
+  "DEBUG": "requests.packages.urllib3.connectionpool:\"GET /get?foo=bar&baz=python HTTP/1.1\" 200 353"
+}
+{
+  "host": "127.0.0.1",
+  "ident": "-",
+  "referer": "http://www.example.com/start.html",
+  "req": "GET /apache_pb.gif HTTP/1.0",
+  "size": "2326",
+  "status": "200",
+  "time": "[10/Oct/2000:13:55:38 -0700]",
+  "ua": "Mozilla/4.08 [en] (Win98; I ;Nav)",
+  "user": "frank"
+}
+{
+  "host": "127.0.0.1",
+  "ident": "-",
+  "referer": "http://www.example.com/start.html",
+  "req": "GET /apache_pb.gif HTTP/1.0",
+  "size": "2326",
+  "status": "200",
+  "time": "[10/Oct/2000:13:55:39 -0700]",
+  "ua": "Mozilla/4.08 [en] (Win98; I ;Nav)",
+  "user": "frank"
+}
+@

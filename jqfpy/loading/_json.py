@@ -8,7 +8,7 @@ except ImportError:
 from .rec import consume_rec
 
 
-def load(stream, *, buffered=False):
+def load(stream, *, buffered=False, errport=None):
     if buffered:
         return _load_buffered(stream)
     else:

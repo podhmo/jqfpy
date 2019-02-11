@@ -1,4 +1,4 @@
-QJ = python -m jqfpy
+QJ = python -m jqfpy -S
 TEE ?= | tee
 
 # see: https://stedolan.github.io/jq/tutorial/

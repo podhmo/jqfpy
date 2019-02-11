@@ -1,3 +1,5 @@
+# integration tests (regression tests)
+TEE = 2>&1 >
 WHERE ?= .
 run:
 	$(MAKE) --silent _find-candidates | xargs -n 1 make -C || (echo "**********NG**********" && exit 1)

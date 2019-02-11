@@ -3,7 +3,7 @@ TEE ?= | tee
 
 # see: https://stedolan.github.io/jq/tutorial/
 jq: 00 01 02 03 04 05
-
+TEE ?= tee |
 jq.tutorial.json:
 	curl 'https://api.github.com/repos/stedolan/jq/commits?per_page=5&until=2019-01-01T00:00:00Z' -o $@
 

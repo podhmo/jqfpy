@@ -1,0 +1,378 @@
+[
+  {
+    "sha": "0bc77083ba711e1961db1cb2ebc9de7c71d1a746",
+    "node_id": "MDY6Q29tbWl0NTEwMTE0MTowYmM3NzA4M2JhNzExZTE5NjFkYjFjYjJlYmM5ZGU3YzcxZDFhNzQ2",
+    "commit": {
+      "author": {
+        "name": "Nicolas Williams",
+        "email": "nico@cryptonector.com",
+        "date": "2018-12-26T18:52:22Z"
+      },
+      "committer": {
+        "name": "Nicolas Williams",
+        "email": "nico@cryptonector.com",
+        "date": "2018-12-26T18:53:48Z"
+      },
+      "message": "Out-of-srcdir builds: AM_CPPFLAGS=-I${srcdir}/src",
+      "tree": {
+        "sha": "5b9f0e1342264d1465fa7001faec3902c89ca944",
+        "url": "https://api.github.com/repos/stedolan/jq/git/trees/5b9f0e1342264d1465fa7001faec3902c89ca944"
+      },
+      "url": "https://api.github.com/repos/stedolan/jq/git/commits/0bc77083ba711e1961db1cb2ebc9de7c71d1a746",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/stedolan/jq/commits/0bc77083ba711e1961db1cb2ebc9de7c71d1a746",
+    "html_url": "https://github.com/stedolan/jq/commit/0bc77083ba711e1961db1cb2ebc9de7c71d1a746",
+    "comments_url": "https://api.github.com/repos/stedolan/jq/commits/0bc77083ba711e1961db1cb2ebc9de7c71d1a746/comments",
+    "author": {
+      "login": "nicowilliams",
+      "id": 604851,
+      "node_id": "MDQ6VXNlcjYwNDg1MQ==",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/604851?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/nicowilliams",
+      "html_url": "https://github.com/nicowilliams",
+      "followers_url": "https://api.github.com/users/nicowilliams/followers",
+      "following_url": "https://api.github.com/users/nicowilliams/following{/other_user}",
+      "gists_url": "https://api.github.com/users/nicowilliams/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/nicowilliams/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/nicowilliams/subscriptions",
+      "organizations_url": "https://api.github.com/users/nicowilliams/orgs",
+      "repos_url": "https://api.github.com/users/nicowilliams/repos",
+      "events_url": "https://api.github.com/users/nicowilliams/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/nicowilliams/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "nicowilliams",
+      "id": 604851,
+      "node_id": "MDQ6VXNlcjYwNDg1MQ==",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/604851?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/nicowilliams",
+      "html_url": "https://github.com/nicowilliams",
+      "followers_url": "https://api.github.com/users/nicowilliams/followers",
+      "following_url": "https://api.github.com/users/nicowilliams/following{/other_user}",
+      "gists_url": "https://api.github.com/users/nicowilliams/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/nicowilliams/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/nicowilliams/subscriptions",
+      "organizations_url": "https://api.github.com/users/nicowilliams/orgs",
+      "repos_url": "https://api.github.com/users/nicowilliams/repos",
+      "events_url": "https://api.github.com/users/nicowilliams/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/nicowilliams/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "b10878fea74b78495ff20070a7c4674644efd7c4",
+        "url": "https://api.github.com/repos/stedolan/jq/commits/b10878fea74b78495ff20070a7c4674644efd7c4",
+        "html_url": "https://github.com/stedolan/jq/commit/b10878fea74b78495ff20070a7c4674644efd7c4"
+      }
+    ]
+  },
+  {
+    "sha": "b10878fea74b78495ff20070a7c4674644efd7c4",
+    "node_id": "MDY6Q29tbWl0NTEwMTE0MTpiMTA4NzhmZWE3NGI3ODQ5NWZmMjAwNzBhN2M0Njc0NjQ0ZWZkN2M0",
+    "commit": {
+      "author": {
+        "name": "Ricardo Constantino",
+        "email": "wiiaboo@gmail.com",
+        "date": "2018-12-26T02:49:05Z"
+      },
+      "committer": {
+        "name": "Nicolas Williams",
+        "email": "nico@cryptonector.com",
+        "date": "2018-12-26T18:53:48Z"
+      },
+      "message": "builtin: add missing windows.h include\n\nFollow-up fix to b436156f5 because BOOL and DWORD\nare not built-in to mingw64.",
+      "tree": {
+        "sha": "6362da9200d95eca08fad5486bb6a5c63b1a42c4",
+        "url": "https://api.github.com/repos/stedolan/jq/git/trees/6362da9200d95eca08fad5486bb6a5c63b1a42c4"
+      },
+      "url": "https://api.github.com/repos/stedolan/jq/git/commits/b10878fea74b78495ff20070a7c4674644efd7c4",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/stedolan/jq/commits/b10878fea74b78495ff20070a7c4674644efd7c4",
+    "html_url": "https://github.com/stedolan/jq/commit/b10878fea74b78495ff20070a7c4674644efd7c4",
+    "comments_url": "https://api.github.com/repos/stedolan/jq/commits/b10878fea74b78495ff20070a7c4674644efd7c4/comments",
+    "author": {
+      "login": "wiiaboo",
+      "id": 111605,
+      "node_id": "MDQ6VXNlcjExMTYwNQ==",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/111605?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/wiiaboo",
+      "html_url": "https://github.com/wiiaboo",
+      "followers_url": "https://api.github.com/users/wiiaboo/followers",
+      "following_url": "https://api.github.com/users/wiiaboo/following{/other_user}",
+      "gists_url": "https://api.github.com/users/wiiaboo/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/wiiaboo/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/wiiaboo/subscriptions",
+      "organizations_url": "https://api.github.com/users/wiiaboo/orgs",
+      "repos_url": "https://api.github.com/users/wiiaboo/repos",
+      "events_url": "https://api.github.com/users/wiiaboo/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/wiiaboo/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "nicowilliams",
+      "id": 604851,
+      "node_id": "MDQ6VXNlcjYwNDg1MQ==",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/604851?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/nicowilliams",
+      "html_url": "https://github.com/nicowilliams",
+      "followers_url": "https://api.github.com/users/nicowilliams/followers",
+      "following_url": "https://api.github.com/users/nicowilliams/following{/other_user}",
+      "gists_url": "https://api.github.com/users/nicowilliams/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/nicowilliams/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/nicowilliams/subscriptions",
+      "organizations_url": "https://api.github.com/users/nicowilliams/orgs",
+      "repos_url": "https://api.github.com/users/nicowilliams/repos",
+      "events_url": "https://api.github.com/users/nicowilliams/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/nicowilliams/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "6893284ee535a531a2e3a5a774bc905a6655f7b3",
+        "url": "https://api.github.com/repos/stedolan/jq/commits/6893284ee535a531a2e3a5a774bc905a6655f7b3",
+        "html_url": "https://github.com/stedolan/jq/commit/6893284ee535a531a2e3a5a774bc905a6655f7b3"
+      }
+    ]
+  },
+  {
+    "sha": "6893284ee535a531a2e3a5a774bc905a6655f7b3",
+    "node_id": "MDY6Q29tbWl0NTEwMTE0MTo2ODkzMjg0ZWU1MzVhNTMxYTJlM2E1YTc3NGJjOTA1YTY2NTVmN2Iz",
+    "commit": {
+      "author": {
+        "name": "Ricardo Constantino",
+        "email": "wiiaboo@gmail.com",
+        "date": "2018-12-26T02:45:54Z"
+      },
+      "committer": {
+        "name": "Ricardo Constantino",
+        "email": "wiiaboo@gmail.com",
+        "date": "2018-12-26T02:45:54Z"
+      },
+      "message": "Makefile.am: add no-undefined for win32\n\n\"Undefined symbols are not allowed in x86_64-w64-mingw32 shared libraries\"\n\nThis was also applied in the official MINGW-packages repo:\nAlexpux/MINGW-packages@b5566c58a",
+      "tree": {
+        "sha": "86e6d9758f4b55a83ab6f13de3b0d7dbf58e7efe",
+        "url": "https://api.github.com/repos/stedolan/jq/git/trees/86e6d9758f4b55a83ab6f13de3b0d7dbf58e7efe"
+      },
+      "url": "https://api.github.com/repos/stedolan/jq/git/commits/6893284ee535a531a2e3a5a774bc905a6655f7b3",
+      "comment_count": 0,
+      "verification": {
+        "verified": true,
+        "reason": "valid",
+        "signature": "-----BEGIN PGP SIGNATURE-----\nVersion: GnuPG v2\n\niQIcBAABCAAGBQJcIutsAAoJEO/RYBmuT/UxsEIQAJaDrHIl1RNuaRSJtJyEdlkB\nbq3sPI9SX+Kb/XVpVtGLMuHaQlOgbKLGCo9vMlBAd/Tvw5FEp+O4fEvAGydkfnH1\nVIAIXLNekF03EJ4FYJL4L/nYuv95xHdpHC+2De4wxM8WQB6sJer+W6bPPSn59QJ1\nCWbn+X+VHYY8o4fAuoYYikVO1H2sIYCHwL2krMZTiKpah5gvF38V9H6BPxqX5Nnk\nCTUgSnYV+KX5W2i2nHZdvDZjyTv6n/kpmSBQAAK5GYu31V2+Qt7DzISJeaQj6gb0\nZN1tmPdK/0F72V//X0P1OPLRGJLcnGRCfy8HTetfnvqKYkRUgoJXLwLZvd6widNc\nQsIn27ite7U/YoNfsaSZ+LDPvaHjWUXcM6MY3lsD9NSIBUi/gWfc9wh0iGGBxZvb\nKN7QN0t8o7n+5wPZyVZhOcceWv8nu5951z1W76jAYl8a9He6HcDp8l17TDMNNksW\ni4Y6goMGbwhluUh/y9x0cC5d0fkOKxeG/yM6pLmIkcgSuQnAoptJ7k6fkGzMRubd\nNOv2Z9Py+HaOQ6vnQ60a7qTUVF90spBjp+jy9Mw/vmODr/jYcJAIQSLD1Z35+2TC\n7dCzAiRx6C0oe5DHFF27irVKSwfDTslvG+abNCybTsI7R2SgWotXFUW1ILT/vhUq\nNEj2feXsnPfqpB5eEwri\n=Fwoj\n-----END PGP SIGNATURE-----",
+        "payload": "tree 86e6d9758f4b55a83ab6f13de3b0d7dbf58e7efe\nparent b436156f5bdcc9ce3f3f93dd30a7bcbdb87910f7\nauthor Ricardo Constantino <wiiaboo@gmail.com> 1545792354 +0000\ncommitter Ricardo Constantino <wiiaboo@gmail.com> 1545792354 +0000\n\nMakefile.am: add no-undefined for win32\n\n\"Undefined symbols are not allowed in x86_64-w64-mingw32 shared libraries\"\n\nThis was also applied in the official MINGW-packages repo:\nAlexpux/MINGW-packages@b5566c58a\n"
+      }
+    },
+    "url": "https://api.github.com/repos/stedolan/jq/commits/6893284ee535a531a2e3a5a774bc905a6655f7b3",
+    "html_url": "https://github.com/stedolan/jq/commit/6893284ee535a531a2e3a5a774bc905a6655f7b3",
+    "comments_url": "https://api.github.com/repos/stedolan/jq/commits/6893284ee535a531a2e3a5a774bc905a6655f7b3/comments",
+    "author": {
+      "login": "wiiaboo",
+      "id": 111605,
+      "node_id": "MDQ6VXNlcjExMTYwNQ==",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/111605?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/wiiaboo",
+      "html_url": "https://github.com/wiiaboo",
+      "followers_url": "https://api.github.com/users/wiiaboo/followers",
+      "following_url": "https://api.github.com/users/wiiaboo/following{/other_user}",
+      "gists_url": "https://api.github.com/users/wiiaboo/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/wiiaboo/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/wiiaboo/subscriptions",
+      "organizations_url": "https://api.github.com/users/wiiaboo/orgs",
+      "repos_url": "https://api.github.com/users/wiiaboo/repos",
+      "events_url": "https://api.github.com/users/wiiaboo/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/wiiaboo/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "wiiaboo",
+      "id": 111605,
+      "node_id": "MDQ6VXNlcjExMTYwNQ==",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/111605?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/wiiaboo",
+      "html_url": "https://github.com/wiiaboo",
+      "followers_url": "https://api.github.com/users/wiiaboo/followers",
+      "following_url": "https://api.github.com/users/wiiaboo/following{/other_user}",
+      "gists_url": "https://api.github.com/users/wiiaboo/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/wiiaboo/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/wiiaboo/subscriptions",
+      "organizations_url": "https://api.github.com/users/wiiaboo/orgs",
+      "repos_url": "https://api.github.com/users/wiiaboo/repos",
+      "events_url": "https://api.github.com/users/wiiaboo/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/wiiaboo/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "b436156f5bdcc9ce3f3f93dd30a7bcbdb87910f7",
+        "url": "https://api.github.com/repos/stedolan/jq/commits/b436156f5bdcc9ce3f3f93dd30a7bcbdb87910f7",
+        "html_url": "https://github.com/stedolan/jq/commit/b436156f5bdcc9ce3f3f93dd30a7bcbdb87910f7"
+      }
+    ]
+  },
+  {
+    "sha": "b436156f5bdcc9ce3f3f93dd30a7bcbdb87910f7",
+    "node_id": "MDY6Q29tbWl0NTEwMTE0MTpiNDM2MTU2ZjViZGNjOWNlM2YzZjkzZGQzMGE3YmNiZGI4NzkxMGY3",
+    "commit": {
+      "author": {
+        "name": "HE, Tao",
+        "email": "sighingnow@gmail.com",
+        "date": "2018-12-18T08:49:32Z"
+      },
+      "committer": {
+        "name": "Nico Williams",
+        "email": "nico@cryptonector.com",
+        "date": "2018-12-19T15:07:14Z"
+      },
+      "message": "Mingw-w64 on windows doesn't have `setenv`, fix that.\n\nSigned-off-by: HE, Tao <sighingnow@gmail.com>",
+      "tree": {
+        "sha": "1a24c5e2c0b550db406419f263375387f27632f2",
+        "url": "https://api.github.com/repos/stedolan/jq/git/trees/1a24c5e2c0b550db406419f263375387f27632f2"
+      },
+      "url": "https://api.github.com/repos/stedolan/jq/git/commits/b436156f5bdcc9ce3f3f93dd30a7bcbdb87910f7",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/stedolan/jq/commits/b436156f5bdcc9ce3f3f93dd30a7bcbdb87910f7",
+    "html_url": "https://github.com/stedolan/jq/commit/b436156f5bdcc9ce3f3f93dd30a7bcbdb87910f7",
+    "comments_url": "https://api.github.com/repos/stedolan/jq/commits/b436156f5bdcc9ce3f3f93dd30a7bcbdb87910f7/comments",
+    "author": {
+      "login": "sighingnow",
+      "id": 7144772,
+      "node_id": "MDQ6VXNlcjcxNDQ3NzI=",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/7144772?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/sighingnow",
+      "html_url": "https://github.com/sighingnow",
+      "followers_url": "https://api.github.com/users/sighingnow/followers",
+      "following_url": "https://api.github.com/users/sighingnow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/sighingnow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/sighingnow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/sighingnow/subscriptions",
+      "organizations_url": "https://api.github.com/users/sighingnow/orgs",
+      "repos_url": "https://api.github.com/users/sighingnow/repos",
+      "events_url": "https://api.github.com/users/sighingnow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/sighingnow/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "nicowilliams",
+      "id": 604851,
+      "node_id": "MDQ6VXNlcjYwNDg1MQ==",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/604851?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/nicowilliams",
+      "html_url": "https://github.com/nicowilliams",
+      "followers_url": "https://api.github.com/users/nicowilliams/followers",
+      "following_url": "https://api.github.com/users/nicowilliams/following{/other_user}",
+      "gists_url": "https://api.github.com/users/nicowilliams/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/nicowilliams/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/nicowilliams/subscriptions",
+      "organizations_url": "https://api.github.com/users/nicowilliams/orgs",
+      "repos_url": "https://api.github.com/users/nicowilliams/repos",
+      "events_url": "https://api.github.com/users/nicowilliams/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/nicowilliams/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "fb1c635af6ca9825707e2372ad6efdd317d674a6",
+        "url": "https://api.github.com/repos/stedolan/jq/commits/fb1c635af6ca9825707e2372ad6efdd317d674a6",
+        "html_url": "https://github.com/stedolan/jq/commit/fb1c635af6ca9825707e2372ad6efdd317d674a6"
+      }
+    ]
+  },
+  {
+    "sha": "fb1c635af6ca9825707e2372ad6efdd317d674a6",
+    "node_id": "MDY6Q29tbWl0NTEwMTE0MTpmYjFjNjM1YWY2Y2E5ODI1NzA3ZTIzNzJhZDZlZmRkMzE3ZDY3NGE2",
+    "commit": {
+      "author": {
+        "name": "Eugen",
+        "email": "eugengez@gmail.com",
+        "date": "2018-11-10T21:08:41Z"
+      },
+      "committer": {
+        "name": "Nico Williams",
+        "email": "nico@cryptonector.com",
+        "date": "2018-12-18T20:20:35Z"
+      },
+      "message": "Make fromstream/1 more efficient",
+      "tree": {
+        "sha": "c024aa68f83a5739dfef4fb2c916e11db5032c32",
+        "url": "https://api.github.com/repos/stedolan/jq/git/trees/c024aa68f83a5739dfef4fb2c916e11db5032c32"
+      },
+      "url": "https://api.github.com/repos/stedolan/jq/git/commits/fb1c635af6ca9825707e2372ad6efdd317d674a6",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/stedolan/jq/commits/fb1c635af6ca9825707e2372ad6efdd317d674a6",
+    "html_url": "https://github.com/stedolan/jq/commit/fb1c635af6ca9825707e2372ad6efdd317d674a6",
+    "comments_url": "https://api.github.com/repos/stedolan/jq/commits/fb1c635af6ca9825707e2372ad6efdd317d674a6/comments",
+    "author": null,
+    "committer": {
+      "login": "nicowilliams",
+      "id": 604851,
+      "node_id": "MDQ6VXNlcjYwNDg1MQ==",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/604851?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/nicowilliams",
+      "html_url": "https://github.com/nicowilliams",
+      "followers_url": "https://api.github.com/users/nicowilliams/followers",
+      "following_url": "https://api.github.com/users/nicowilliams/following{/other_user}",
+      "gists_url": "https://api.github.com/users/nicowilliams/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/nicowilliams/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/nicowilliams/subscriptions",
+      "organizations_url": "https://api.github.com/users/nicowilliams/orgs",
+      "repos_url": "https://api.github.com/users/nicowilliams/repos",
+      "events_url": "https://api.github.com/users/nicowilliams/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/nicowilliams/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "6d3d2750ec1e076cd86189b8fcfe1b760e2207c7",
+        "url": "https://api.github.com/repos/stedolan/jq/commits/6d3d2750ec1e076cd86189b8fcfe1b760e2207c7",
+        "html_url": "https://github.com/stedolan/jq/commit/6d3d2750ec1e076cd86189b8fcfe1b760e2207c7"
+      }
+    ]
+  }
+]

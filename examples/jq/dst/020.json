@@ -1,0 +1,4 @@
+{
+  "message": "Out-of-srcdir builds: AM_CPPFLAGS=-I${srcdir}/src",
+  "name": "Nicolas Williams"
+}

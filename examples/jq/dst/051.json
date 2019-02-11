@@ -1,0 +1,37 @@
+[
+  {
+    "message": "Out-of-srcdir builds: AM_CPPFLAGS=-I${srcdir}/src",
+    "name": "Nicolas Williams",
+    "parents": [
+      "https://github.com/stedolan/jq/commit/b10878fea74b78495ff20070a7c4674644efd7c4"
+    ]
+  },
+  {
+    "message": "builtin: add missing windows.h include\n\nFollow-up fix to b436156f5 because BOOL and DWORD\nare not built-in to mingw64.",
+    "name": "Nicolas Williams",
+    "parents": [
+      "https://github.com/stedolan/jq/commit/6893284ee535a531a2e3a5a774bc905a6655f7b3"
+    ]
+  },
+  {
+    "message": "Makefile.am: add no-undefined for win32\n\n\"Undefined symbols are not allowed in x86_64-w64-mingw32 shared libraries\"\n\nThis was also applied in the official MINGW-packages repo:\nAlexpux/MINGW-packages@b5566c58a",
+    "name": "Ricardo Constantino",
+    "parents": [
+      "https://github.com/stedolan/jq/commit/b436156f5bdcc9ce3f3f93dd30a7bcbdb87910f7"
+    ]
+  },
+  {
+    "message": "Mingw-w64 on windows doesn't have `setenv`, fix that.\n\nSigned-off-by: HE, Tao <sighingnow@gmail.com>",
+    "name": "Nico Williams",
+    "parents": [
+      "https://github.com/stedolan/jq/commit/fb1c635af6ca9825707e2372ad6efdd317d674a6"
+    ]
+  },
+  {
+    "message": "Make fromstream/1 more efficient",
+    "name": "Nico Williams",
+    "parents": [
+      "https://github.com/stedolan/jq/commit/6d3d2750ec1e076cd86189b8fcfe1b760e2207c7"
+    ]
+  }
+]

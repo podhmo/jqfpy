@@ -1,5 +1,5 @@
 QJ = python -m jqfpy
-TEE ?= tee |
+TEE ?= | tee
 default: 00 01 02 03 04 05
 
 dst:

@@ -1,34 +1,37 @@
 QJ = python -m jqfpy
 
-default: 00 01 02 03 04
+default: 00 01 02 03 04 05
 
-00:
+dst:
+	mkdir -p dst
+
+00: dst
 	echo --compact-output
-	cat 00data.json | ${QJ} 'get()'
-	cat 00data.json | ${QJ} -c 'get()'
+	cat 00data.json | ${QJ} 'get()' 2>&1 > dst/000.json
+	cat 00data.json | ${QJ} -c 'get()' 2>&1 > dst/001.json
 
-01:
+01: dst
 	echo --slurp-input
-	cat 01data.json | ${QJ} -s 'get()'
+	cat 01data.json | ${QJ} -s 'get()' 2>&1 > dst/01.json
 
-02:
+02: dst
 	echo --sort-keys
-	cat 02data.json | ${QJ} -c 'get()'
-	cat 02data.json | ${QJ} -c -S 'get()'
+	cat 02data.json | ${QJ} -c 'get()' 2>&1 > dst/020.json
+	cat 02data.json | ${QJ} -c -S 'get()'  2>&1 > dst/021.json
 
-03:
+03: dst
 	echo --ascii-output
-	cat 03data.json | ${QJ}  'get()'
-	cat 03data.json | ${QJ} -a 'get()'
+	cat 03data.json | ${QJ}  'get()'  2>&1 > dst/030.json
+	cat 03data.json | ${QJ} -a 'get()'  2>&1 > dst/031.json
 
-04:
+04: dst
 	echo --raw-output
-	cat 03data.json | ${QJ}  'get("en")'
-	cat 03data.json | ${QJ} -r 'get("en")'
-	cat 04data.json | ${QJ} --squash
-	cat 04data.json | ${QJ} --squash -r
+	cat 03data.json | ${QJ}  'get("en")'  2>&1 > dst/040.json
+	cat 03data.json | ${QJ} -r 'get("en")'  2>&1 > dst/041.json
+	cat 04data.json | ${QJ} --squash  2>&1 > dst/042.json
+	cat 04data.json | ${QJ} --squash -r  2>&1 > dst/043.json
 
-05:
-	cat 05data.json | ${QJ} -r
-	cat 05data.json | ${QJ} -r --squash
-	cat 05data.json | ${QJ} -r --squash --squash
+05: dst
+	cat 05data.json | ${QJ} -r  2>&1 > dst/050.json
+	cat 05data.json | ${QJ} -r --squash  2>&1 > dst/051.json
+	cat 05data.json | ${QJ} -r --squash --squash  2>&1 > dst/052.json

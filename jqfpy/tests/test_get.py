@@ -18,6 +18,7 @@ class GetTests(unittest.TestCase):
         target = self._makeOne(d)
 
         candidates = [
+            ("/person", d["person"]),
             ("person", d["person"]),
             ("person/name", "foo"),
             ("person/age", 20),

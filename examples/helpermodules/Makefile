@@ -1,4 +1,4 @@
-default: 00 01 02
+default: 00 01 02 03 04
 
 TEE ?= | tee 
 dst:
@@ -33,3 +33,10 @@ dst:
 	cat src/02*/data.json | jqfpy 'h.omit("father", "mother")' ${TEE} dst/02/omit.json
 	cat src/02*/data.json | jqfpy 'h.omit("father", "mother/nickname")' ${TEE} dst/02/omit.json
 	cat src/02*/data.json | jqfpy 'h.omit("nickname", d=get("father"))' ${TEE} dst/02/omit.json
+
+# h.chunk()
+03: dst
+	rm -rf dst/03 && mkdir dst/03
+	cat src/03*/data.json | jqfpy ${TEE} dst/03/input.json
+	cat src/03*/data.json | jqfpy 'h.chunk(get("members"), n=5)' ${TEE} dst/03/chunk5.json
+	cat src/03*/data.json | jqfpy 'h.chunk(get("members"), n=4)' ${TEE} dst/03/chunk4.json

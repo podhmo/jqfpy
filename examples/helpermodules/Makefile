@@ -1,4 +1,4 @@
-default: 00 01 02 03 04
+default: 00 01 02 03
 
 TEE ?= | tee 
 dst:
@@ -8,13 +8,13 @@ dst:
 00: dst
 	rm -rf dst/00 && mkdir dst/00
 	# dumpfile
-	jqfpy '[h.dumpfile("dst/00/"+k, v) for k,v in get().items()]' src/00*/data.json
+	jqfpy '[h.dumpfile("dst/00/"+k, v) for k,v in get().items()]' src/00*/data.json > /dev/null
 	# dumpfile(yaml)
-	jqfpy '[h.dumpfile("dst/00/"+k.replace(".json",".yaml"), v) for k,v in get().items()]' src/00*/data.json
+	jqfpy '[h.dumpfile("dst/00/"+k.replace(".json",".yaml"), v) for k,v in get().items()]' src/00*/data.json > /dev/null
 	# dumpfile with --relative-path
-	jqfpy --relative-path '[h.dumpfile("../../dst/00/"+k, v) for k,v in get().items()]' src/00*/data.json
+	jqfpy --relative-path '[h.dumpfile("../../dst/00/"+k, v) for k,v in get().items()]' src/00*/data.json > /dev/null
 	# dumpfile with --here
-	jqfpy --here=dst/00 '[h.dumpfile(k, v) for k,v in get().items()]' src/00*/data.json
+	jqfpy --here=dst/00 '[h.dumpfile(k, v) for k,v in get().items()]' src/00*/data.json > /dev/null
 	test -f dst/00/a.json
 	test ! -f a.json
 

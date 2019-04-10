@@ -1,0 +1,29 @@
+{
+  "constraint": [
+    {
+      "branch": "parse-constraints-with-dash-in-pre",
+      "name": "github.com/Masterminds/semver",
+      "source": "https://github.com/carolynvs/semver.git"
+    },
+    {
+      "name": "github.com/Masterminds/vcs",
+      "version": "1.11.0"
+    },
+    {
+      "branch": "v2",
+      "name": "github.com/go-yaml/yaml"
+    },
+    {
+      "branch": "master",
+      "name": "github.com/pelletier/go-toml"
+    },
+    {
+      "name": "github.com/pkg/errors",
+      "version": "0.8.0"
+    },
+    {
+      "name": "github.com/boltdb/bolt",
+      "version": "1.0.0"
+    }
+  ]
+}

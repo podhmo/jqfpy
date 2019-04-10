@@ -42,8 +42,12 @@ def main():
     parser.add_argument("-S", "--sort-keys", action="store_true")
     parser.add_argument("-a", "--ascii-output", action="store_true")
     parser.add_argument("-r", "--raw-output", action="store_true")
-    parser.add_argument("--relative-path", action="store_true")
-    parser.add_argument("--here", default=None)
+    parser.add_argument(
+        "--relative-path",
+        action="store_true",
+        help="when h.dumpfile(), iff accessing opend filename, treating as relative path",
+    )
+    parser.add_argument("--here", default=None, help="cwd for h.dumpfile()")
 
     parser.add_argument("--buffered", action="store_true", dest="buffered")
     parser.add_argument("--unbuffered", action="store_false", dest="buffered")

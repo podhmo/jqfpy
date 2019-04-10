@@ -83,7 +83,7 @@ def main():
             for d in m.load(stream, buffered=args.buffered):
                 yield d
 
-    def _dump(d, *, i):
+    def _dump(d, *, i=0, fp=fp):
         m = loading.get_module(fp, default_format=args.output_format)
         if i > 0 and m.SEPARATOR:
             fp.write(m.SEPARATOR)
@@ -104,12 +104,14 @@ def main():
     if args.slurp:
         d = list(_load(files))
         with gentle_error_reporting(pycode, fp):
-            r = jqfpy.transform(transform_fn, d, additionals=additionals)
+            r = jqfpy.transform(transform_fn, d, dump=_dump, additionals=additionals)
         _dump(r, i=0)
     else:
         with gentle_error_reporting(pycode, fp):
             for i, d in enumerate(_load(files)):
-                r = jqfpy.transform(transform_fn, d, additionals=additionals)
+                r = jqfpy.transform(
+                    transform_fn, d, dump=_dump, additionals=additionals
+                )
                 _dump(r, i=i)
     fp.flush()
 

@@ -1,4 +1,4 @@
-default: 00 01
+default: 00 01 02
 
 TEE ?= | tee 
 dst:
@@ -25,3 +25,11 @@ dst:
 	cat src/01*/data.json | jqfpy 'h.pick("person/name", "person/age")' ${TEE} dst/01/pick.json
 	cat src/01*/data.json | jqfpy 'h.pick("person/name@name", "person/age@age")' ${TEE} dst/01/unwrap.json
 	cat src/01*/data.json | jqfpy 'h.pick("name", "age", d=get("person"))' ${TEE} dst/01/unwrap2.json
+
+# h.omit()
+02: dst
+	rm -rf dst/02 && mkdir dst/02
+	cat src/02*/data.json | jqfpy ${TEE} dst/02/input.json
+	cat src/02*/data.json | jqfpy 'h.omit("father", "mother")' ${TEE} dst/02/omit.json
+	cat src/02*/data.json | jqfpy 'h.omit("father", "mother/nickname")' ${TEE} dst/02/omit.json
+	cat src/02*/data.json | jqfpy 'h.omit("nickname", d=get("father"))' ${TEE} dst/02/omit.json

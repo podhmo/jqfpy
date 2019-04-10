@@ -20,15 +20,15 @@ dst:
 02: dst := dst/02other-formats
 02: dst
 	rm	-rf ${dst}; mkdir -p ${dst}
-	cat 02data.yaml | jqfpy -i yaml ${TEE} ${dst}/input.json
-	cat 02data.yaml | jqfpy -i yaml -o yaml 'get("person")' ${TEE} ${dst}/person.yaml
-	cat 02data.yaml | jqfpy -i yaml -o ltsv 'get("person")' ${TEE} ${dst}/person.ltsv
+	cat person.yaml | jqfpy -i yaml ${TEE} ${dst}/input.json
+	cat person.yaml | jqfpy -i yaml -o yaml 'get("person")' ${TEE} ${dst}/person.yaml
+	cat person.yaml | jqfpy -i yaml -o ltsv 'get("person")' ${TEE} ${dst}/person.ltsv
 
 03: dst := dst/03helper-modules
 03: dst
 	rm	-rf ${dst}; mkdir -p ${dst}
-	cat 02data.yaml | jqfpy -i yaml ${TEE} ${dst}/input.json
-	cat 02data.yaml | jqfpy -i yaml 'h.pick("person/name", "person/age")'  ${TEE} ${dst}/h.pick.json
-	cat 02data.yaml | jqfpy -i yaml 'h.pick("person/name@name", "person/age@age")'  ${TEE} ${dst}/h.pick.unwrap.json
-	cat 02data.yaml | jqfpy -i yaml 'h.omit("person/nickname")' ${TEE} ${dst}/h.omit.json
+	cat person.yaml | jqfpy -i yaml ${TEE} ${dst}/input.json
+	cat person.yaml | jqfpy -i yaml 'h.pick("person/name", "person/age")'  ${TEE} ${dst}/h.pick.json
+	cat person.yaml | jqfpy -i yaml 'h.pick("person/name@name", "person/age@age")'  ${TEE} ${dst}/h.pick.unwrap.json
+	cat person.yaml | jqfpy -i yaml 'h.omit("person/nickname")' ${TEE} ${dst}/h.omit.json
 

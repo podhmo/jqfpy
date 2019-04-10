@@ -1,0 +1,16 @@
+{
+  "apps": {
+    "foo": {
+      "use": true
+    },
+    "bar": {
+      "use": true
+    },
+    "boo": {
+      "use": true
+    },
+    "bee": {
+      "use": false
+    }
+  }
+}

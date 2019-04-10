@@ -3,9 +3,12 @@ TEE ?= | tee
 dst:
 	mkdir -p dst
 
+00: dst := dst/00top
 00: dst
-	cat data.json | jq '.apps | . as $$o | keys | map(select($$o[.].use))' ${TEE} dst/000.json
-	cat data.json | jqfpy '[k for k, opts in get("apps").items() if opts["use"]]' ${TEE} dst/001.json
+	rm	-rf ${dst}; mkdir -p ${dst}
+	cat data.json ${TEE} ${dst}/input.json
+	cat data.json | jq '.apps | . as $$o | keys | map(select($$o[.].use))' ${TEE} ${dst}/jq.json
+	cat data.json | jqfpy '[k for k, opts in get("apps").items() if opts["use"]]' ${TEE} ${dst}/jqfpy.json
 
 01: dst
 	cat data.json | jq -r '.apps | . as $$o | keys | map(select($$o[.].use)) | sort_by(.) | .[]' ${TEE} dst/010.json

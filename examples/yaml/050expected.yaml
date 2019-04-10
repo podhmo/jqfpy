@@ -6,3 +6,10 @@ data:
   '@ionic/storage': ^2.1.3
   '@types/jasmine': 2.8.9
   '@types/netlify-identity-widget': ^1.4.0
+multilines:
+  multiline0: |
+    hello#greeting
+    bye#greeting
+  multiline1: |-
+    hello#greeting
+    bye#greeting

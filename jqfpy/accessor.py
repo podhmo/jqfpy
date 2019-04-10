@@ -1,7 +1,7 @@
 # todo: strict version
 class Accessor:
     def split_key(self, k, *, sep="/"):
-        return [normalize_json_pointer(x) for x in k.split(sep)]
+        return [normalize_json_pointer(x) for x in k.lstrip(sep).split(sep)]
 
     def split_key_pair(self, k, *, sep="@"):
         if sep not in k:

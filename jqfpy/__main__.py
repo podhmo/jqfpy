@@ -42,6 +42,8 @@ def main():
     parser.add_argument("-S", "--sort-keys", action="store_true")
     parser.add_argument("-a", "--ascii-output", action="store_true")
     parser.add_argument("-r", "--raw-output", action="store_true")
+    parser.add_argument("--relative-path", action="store_true")
+    parser.add_argument("--here", default=None)
 
     parser.add_argument("--buffered", action="store_true", dest="buffered")
     parser.add_argument("--unbuffered", action="store_false", dest="buffered")
@@ -77,8 +79,16 @@ def main():
     with gentle_error_reporting(pycode, fp):
         transform_fn = jqfpy.exec_pycode(fnname, pycode)
 
-    def _load(streams):
+    def _load(streams, *, relative=args.relative_path, here=args.here):
+        if args.here:
+            os.chdir(args.here)
+
         for stream in streams:
+            if relative:
+                filepath = loading.get_filepath_from_stream(stream)
+                if filepath:
+                    os.chdir(os.path.dirname(filepath))
+
             m = loading.get_module(stream, default_format=args.input_format)
             for d in m.load(stream, buffered=args.buffered):
                 yield d

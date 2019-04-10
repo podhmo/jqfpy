@@ -1,6 +1,6 @@
 QJ = python -m jqfpy -S
 
-default: 00 01 02 03 04
+default: 00 01 02 03 04 05
 
 00:
 	${QJ} 00data.yaml > .qj.output0
@@ -27,3 +27,8 @@ default: 00 01 02 03 04
 	diff -u 040expected.yaml .qj.output40
 	${QJ} -r -o yaml 'get()' 04data.yaml > .qj.output41
 	diff -u 041expected.yaml .qj.output41
+
+05:
+	# include hash (#24)
+	${QJ} -o yaml 05data.yaml > .qj.output50
+	diff -u 050expected.yaml .qj.output50

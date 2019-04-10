@@ -10,9 +10,12 @@ dst:
 	cat data.json | jq '.apps | . as $$o | keys | map(select($$o[.].use))' ${TEE} ${dst}/jq.json
 	cat data.json | jqfpy '[k for k, opts in get("apps").items() if opts["use"]]' ${TEE} ${dst}/jqfpy.json
 
+01: dst := dst/01top-sorted
 01: dst
-	cat data.json | jq -r '.apps | . as $$o | keys | map(select($$o[.].use)) | sort_by(.) | .[]' ${TEE} dst/010.json
-	cat data.json | jqfpy --squash -r 'L = get("apps"); ks = [k for k, opts in L.items() if opts["use"]]; sorted(ks)' ${TEE} dst/011.json
+	rm	-rf ${dst}; mkdir -p ${dst}
+	cat data.json ${TEE} ${dst}/input.json
+	cat data.json | jq -r '.apps | . as $$o | keys | map(select($$o[.].use)) | sort_by(.) | .[]' ${TEE} ${dst}/jq.json
+	cat data.json | jqfpy --squash -r 'L = get("apps"); ks = [k for k, opts in L.items() if opts["use"]]; sorted(ks)' ${TEE} ${dst}/jqfpy.json
 
 02: dst
 	cat 02data.yaml | jqfpy -i yaml 'get("person")' ${TEE} dst/020.json

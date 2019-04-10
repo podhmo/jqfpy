@@ -1,4 +1,4 @@
-default: 00 01 02 03 04
+default: 00 01 02 03
 TEE ?= | tee
 dst:
 	mkdir -p dst
@@ -24,10 +24,11 @@ dst:
 	cat 02data.yaml | jqfpy -i yaml -o yaml 'get("person")' ${TEE} ${dst}/person.yaml
 	cat 02data.yaml | jqfpy -i yaml -o ltsv 'get("person")' ${TEE} ${dst}/person.ltsv
 
+03: dst := dst/03helper-modules
 03: dst
-	cat 02data.yaml | jqfpy -i yaml 'h.pick("person/name", "person/age")'  ${TEE} dst/030.json
-	cat 02data.yaml | jqfpy -i yaml 'h.pick("person/name@name", "person/age@age")'  ${TEE} dst/031.json
-
-04: dst
-	cat 02data.yaml | jqfpy -i yaml 'h.omit("person/nickname")' ${TEE} dst/04.json
+	rm	-rf ${dst}; mkdir -p ${dst}
+	cat 02data.yaml | jqfpy -i yaml ${TEE} ${dst}/input.json
+	cat 02data.yaml | jqfpy -i yaml 'h.pick("person/name", "person/age")'  ${TEE} ${dst}/h.pick.json
+	cat 02data.yaml | jqfpy -i yaml 'h.pick("person/name@name", "person/age@age")'  ${TEE} ${dst}/h.pick.unwrap.json
+	cat 02data.yaml | jqfpy -i yaml 'h.omit("person/nickname")' ${TEE} ${dst}/h.omit.json
 

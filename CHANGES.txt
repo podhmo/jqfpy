@@ -1,3 +1,10 @@
+0.5.0
+
+- drop python 3.5
+- yaml output, oneline string including hash, always quoted (#28)
+- treat '/foo' as 'foo' (lstripped)
+- add h.dumpfile() function  (#31)
+
 0.4.2
 
 - support python 3.4

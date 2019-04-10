@@ -1,4 +1,4 @@
-default: 00 01 02 03
+default: 00 01 02 03 04
 TEE ?= | tee
 dst:
 	mkdir -p dst
@@ -31,4 +31,10 @@ dst:
 	cat person.yaml | jqfpy -i yaml 'h.pick("person/name", "person/age")'  ${TEE} ${dst}/h.pick.json
 	cat person.yaml | jqfpy -i yaml 'h.pick("person/name@name", "person/age@age")'  ${TEE} ${dst}/h.pick.unwrap.json
 	cat person.yaml | jqfpy -i yaml 'h.omit("person/nickname")' ${TEE} ${dst}/h.omit.json
+
+04: dst := dst/04additionals
+04:
+	rm	-rf ${dst}; mkdir -p ${dst}
+	cat versions.json | jqfpy ${TEE} ${dst}/input.json
+	cat versions.json | jqfpy --additionals=./match.py '[d for d in get("constraint") if h.match("^1\..+", d.get("version"))]' ${TEE} ${dst}/version-1.x.x-only.json
 

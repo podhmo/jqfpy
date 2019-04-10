@@ -1,6 +1,7 @@
 import json
 from json.decoder import WHITESPACE
 from collections import deque, OrderedDict
+
 try:
     from json import JSONDecodeError
 except ImportError:

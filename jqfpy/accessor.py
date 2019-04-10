@@ -17,7 +17,7 @@ class Accessor:
                     continue  # on last, no effect
                 else:
                     next_key = access_keys[i + 1]
-                    rest_keys = access_keys[i + 1:]
+                    rest_keys = access_keys[i + 1 :]
                     for gk, v in d.items():
                         if hasattr(v, "__contains__") and next_key in v:
                             return self.access(rest_keys, d[gk])
@@ -27,7 +27,7 @@ class Accessor:
                     continue  # on last, no effect
                 else:
                     next_key = access_keys[i + 1]
-                    rest_keys = access_keys[i + 1:]
+                    rest_keys = access_keys[i + 1 :]
                     candidates = []
                     for gk, v in d.items():
                         if hasattr(v, "__contains__") and next_key in v:
@@ -37,7 +37,7 @@ class Accessor:
                     return default
             elif k.endswith("[]"):
                 k = k.rstrip("[]")
-                rest_keys = access_keys[i + 1:]
+                rest_keys = access_keys[i + 1 :]
                 return [self.access(rest_keys, e) for e in d[k]]
             elif k.isdecimal():
                 try:

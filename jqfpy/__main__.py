@@ -30,8 +30,12 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("code", nargs="?", default="get()")
     parser.add_argument("file", nargs="*", type=argparse.FileType("r"))
-    parser.add_argument("-i", "--input-format", choices=["json", "yaml", "ltsv"], default="json")
-    parser.add_argument("-o", "--output-format", choices=["json", "yaml", "ltsv"], default="json")
+    parser.add_argument(
+        "-i", "--input-format", choices=["json", "yaml", "ltsv"], default="json"
+    )
+    parser.add_argument(
+        "-o", "--output-format", choices=["json", "yaml", "ltsv"], default="json"
+    )
 
     parser.add_argument("-c", "--compact-output", action="store_true")
     parser.add_argument("-s", "--slurp", action="store_true")

@@ -23,7 +23,9 @@ class HelperModule:
 
     def pick(self, *ks, d=None, default=None):
         d = d or self.d
-        return pick(d, ks, default=default, factory=self.factory, accessor=self.accessor)
+        return pick(
+            d, ks, default=default, factory=self.factory, accessor=self.accessor
+        )
 
     def omit(self, *ks, d=None):
         d = d or self.d
@@ -99,4 +101,4 @@ def chunk(iterable, n):
             first_el = next(chunk_it)
         except StopIteration:
             return
-        yield tuple(itertools.chain((first_el, ), chunk_it))
+        yield tuple(itertools.chain((first_el,), chunk_it))

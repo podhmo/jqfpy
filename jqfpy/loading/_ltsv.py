@@ -4,7 +4,9 @@ from .rec import consume_rec
 
 def load(stream, *, buffered=False):
     for line in stream:
-        yield OrderedDict(pair.split(":", 1) for pair in line.rstrip("\n\r").split("\t"))
+        yield OrderedDict(
+            pair.split(":", 1) for pair in line.rstrip("\n\r").split("\t")
+        )
 
 
 def dump(d, fp, *, squash_level=0, raw=False, extra_kwargs=None):

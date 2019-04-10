@@ -1,0 +1,21 @@
+{
+  "a.json": {
+    "name": "a",
+    "values": [
+      1,
+      2,
+      3
+    ]
+  },
+  "b.json": {
+    "name": "b",
+    "values": [
+      1,
+      10,
+      100
+    ]
+  },
+  "c.json": {
+    "name": "c"
+  }
+}

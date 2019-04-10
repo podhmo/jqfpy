@@ -35,7 +35,7 @@ class Dispatcher:
         return self._lookup(stream, default_format)
 
     def _lookup(self, stream, default):
-        filename = getattr(stream, "name", "")
+        filename = get_filepath_from_stream(stream)
         ext = os.path.splitext(filename)[1]
         try:
             return self.repository.lookup_by_extname(ext)
@@ -80,3 +80,7 @@ def ltsv():
 
 register = _repo.register
 get_module = Dispatcher(_repo).dispatch
+
+
+def get_filepath_from_stream(stream):
+    return getattr(stream, "name", "")

@@ -42,6 +42,12 @@ def main():
     parser.add_argument("-S", "--sort-keys", action="store_true")
     parser.add_argument("-a", "--ascii-output", action="store_true")
     parser.add_argument("-r", "--raw-output", action="store_true")
+    parser.add_argument(
+        "--relative-path",
+        action="store_true",
+        help="when h.dumpfile(), iff accessing opend filename, treating as relative path",
+    )
+    parser.add_argument("--here", default=None, help="cwd for h.dumpfile()")
 
     parser.add_argument("--buffered", action="store_true", dest="buffered")
     parser.add_argument("--unbuffered", action="store_false", dest="buffered")
@@ -77,13 +83,21 @@ def main():
     with gentle_error_reporting(pycode, fp):
         transform_fn = jqfpy.exec_pycode(fnname, pycode)
 
-    def _load(streams):
+    def _load(streams, *, relative=args.relative_path, here=args.here):
+        if args.here:
+            os.chdir(args.here)
+
         for stream in streams:
+            if relative:
+                filepath = loading.get_filepath_from_stream(stream)
+                if filepath:
+                    os.chdir(os.path.dirname(filepath))
+
             m = loading.get_module(stream, default_format=args.input_format)
             for d in m.load(stream, buffered=args.buffered):
                 yield d
 
-    def _dump(d, *, i):
+    def _dump(d, *, i=0, fp=fp):
         m = loading.get_module(fp, default_format=args.output_format)
         if i > 0 and m.SEPARATOR:
             fp.write(m.SEPARATOR)
@@ -104,12 +118,14 @@ def main():
     if args.slurp:
         d = list(_load(files))
         with gentle_error_reporting(pycode, fp):
-            r = jqfpy.transform(transform_fn, d, additionals=additionals)
+            r = jqfpy.transform(transform_fn, d, dump=_dump, additionals=additionals)
         _dump(r, i=0)
     else:
         with gentle_error_reporting(pycode, fp):
             for i, d in enumerate(_load(files)):
-                r = jqfpy.transform(transform_fn, d, additionals=additionals)
+                r = jqfpy.transform(
+                    transform_fn, d, dump=_dump, additionals=additionals
+                )
                 _dump(r, i=i)
     fp.flush()
 

@@ -1,3 +1,4 @@
+import sys
 import itertools
 from collections import OrderedDict
 from . import accessor
@@ -6,11 +7,12 @@ from . import _tree as tree
 
 # todo: dynamic loading via option
 class HelperModule:
-    def __init__(self, getter, *, factory=OrderedDict, additionals=None):
+    def __init__(self, getter, *, factory=OrderedDict, additionals=None, dump=None):
         self.getter = getter
         self.accessor = getter.accessor  # xxx
         self.factory = factory
         self.additionals = additionals
+        self.dump = dump or self._dump_default
 
     def __getattr__(self, k):
         if self.additionals is None:
@@ -20,6 +22,13 @@ class HelperModule:
     @property
     def d(self):
         return self.getter.d
+
+    def dumpfile(self, filename, data):
+        with open(filename, "w") as wf:
+            self.dump(data, fp=wf)
+
+    def _dump_default(self, data, fp=sys.stdout):
+        print(data, file=fp)
 
     def pick(self, *ks, d=None, default=None):
         d = d or self.d

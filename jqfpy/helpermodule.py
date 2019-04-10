@@ -23,12 +23,12 @@ class HelperModule:
     def d(self):
         return self.getter.d
 
-    def dumpfile(self, filename, data):
+    def dumpfile(self, filename, data, *, raw=False):
         with open(filename, "w") as wf:
-            self.dump(data, fp=wf)
+            self.dump(data, fp=wf, raw=raw)
 
-    def _dump_default(self, data, fp=sys.stdout):
-        print(data, file=fp)
+    def _dump_default(self, data, *, fp=sys.stdout, raw=False):
+        print(data, file=fp, raw=raw)
 
     def pick(self, *ks, d=None, default=None):
         d = d or self.d

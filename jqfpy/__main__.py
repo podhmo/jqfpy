@@ -97,7 +97,7 @@ def main():
             for d in m.load(stream, buffered=args.buffered):
                 yield d
 
-    def _dump(d, *, i=0, fp=fp):
+    def _dump(d, *, i=0, fp=fp, raw=False):
         m = loading.get_module(fp, default_format=args.output_format)
         if i > 0 and m.SEPARATOR:
             fp.write(m.SEPARATOR)
@@ -105,7 +105,7 @@ def main():
             d,
             fp=fp,
             squash_level=args.squash,
-            raw=args.raw_output,
+            raw=raw or args.raw_output,
             extra_kwargs=dict(
                 indent=None if args.compact_output else 2,
                 sort_keys=args.sort_keys,

@@ -49,6 +49,7 @@ _repo = Repository()
 @_repo.register(".json", ".js")
 def json():
     from . import _json as m
+
     m.SEPARATOR = None
     return m
 
@@ -57,12 +58,13 @@ def json():
 def yaml():
     try:
         from . import _yaml as m
+
         m.SEPARATOR = "---\n"
     except ImportError:
         fp = sys.stderr
         print(
             "\x1b[33m\x1b[1myaml module is not found. please install via \n  pip install 'jqfpy[yaml]'\x1b[0m",
-            file=fp
+            file=fp,
         )
         sys.exit(1)
     return m
@@ -71,6 +73,7 @@ def yaml():
 @_repo.register(".ltsv")
 def ltsv():
     from . import _ltsv as m
+
     m.SEPARATOR = None
     return m
 

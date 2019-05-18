@@ -41,5 +41,5 @@ def create_context(*, here=None, extra_kwargs=None) -> Context:
 
 def transform(ctx, fn, d, *, additionals=None):
     getter = Getter(d)
-    h = HelperModule(getter, ctx, additionals=additionals)
+    h = HelperModule(ctx, getter, additionals=additionals)
     return fn(getter, h=h)

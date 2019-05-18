@@ -61,7 +61,7 @@ class Loader:
 
 
 class HelperModule:
-    def __init__(self, getter, ctx, *, factory=OrderedDict, additionals=None):
+    def __init__(self, ctx, getter, *, factory=OrderedDict, additionals=None):
         self.getter = getter
         self.accessor = getter.accessor  # xxx
         self.factory = factory

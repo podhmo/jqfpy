@@ -1,3 +1,7 @@
+0.5.2
+
+- add h.loadfile() function  (#35)
+
 0.5.1
 
 - h.dumpfile() with raw option

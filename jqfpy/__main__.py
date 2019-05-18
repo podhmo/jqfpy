@@ -80,25 +80,30 @@ def main():
     if args.additionals is not None:
         additionals = magicalimport.import_module(args.additionals)
 
+    dump_extra_kwargs = dict(
+        indent=None if args.compact_output else 2,
+        sort_keys=args.sort_keys,
+        ensure_ascii=args.ascii_output,
+    )
+    # xxx: chdir if here is not None
+    ctx = jqfpy.create_context(here=args.here, extra_kwargs=dump_extra_kwargs)
+
     with gentle_error_reporting(pycode, fp):
         transform_fn = jqfpy.exec_pycode(fnname, pycode)
 
-    def _load(streams, *, relative=args.relative_path, here=args.here):
-        if args.here:
-            os.chdir(args.here)
-
+    def _load(streams, *, relative=args.relative_path):
         for stream in streams:
             if relative:
                 filepath = loading.get_filepath_from_stream(stream)
                 if filepath:
-                    os.chdir(os.path.dirname(filepath))
+                    ctx.chdir(os.path.dirname(filepath))
 
-            m = loading.get_module(stream, default_format=args.input_format)
+            m = ctx.get_module(stream, format=args.input_format)
             for d in m.load(stream, buffered=args.buffered):
                 yield d
 
     def _dump(d, *, i=0, fp=fp, raw=False):
-        m = loading.get_module(fp, default_format=args.output_format)
+        m = ctx.get_module(fp, format=args.output_format)
         if i > 0 and m.SEPARATOR:
             fp.write(m.SEPARATOR)
         m.dump(
@@ -106,11 +111,7 @@ def main():
             fp=fp,
             squash_level=args.squash,
             raw=raw or args.raw_output,
-            extra_kwargs=dict(
-                indent=None if args.compact_output else 2,
-                sort_keys=args.sort_keys,
-                ensure_ascii=args.ascii_output,
-            ),
+            extra_kwargs=ctx.dump_extra_kwargs,
         )
         if not args.buffered:
             fp.flush()
@@ -118,14 +119,12 @@ def main():
     if args.slurp:
         d = list(_load(files))
         with gentle_error_reporting(pycode, fp):
-            r = jqfpy.transform(transform_fn, d, dump=_dump, additionals=additionals)
+            r = jqfpy.transform(ctx, transform_fn, d, additionals=additionals)
         _dump(r, i=0)
     else:
         with gentle_error_reporting(pycode, fp):
             for i, d in enumerate(_load(files)):
-                r = jqfpy.transform(
-                    transform_fn, d, dump=_dump, additionals=additionals
-                )
+                r = jqfpy.transform(ctx, transform_fn, d, additionals=additionals)
                 _dump(r, i=i)
     fp.flush()
 

@@ -1,18 +1,72 @@
-import sys
+import os
 import itertools
 from collections import OrderedDict
+from .langhelpers import reify
+from . import loading
 from . import accessor
 from . import _tree as tree
 
 
-# todo: dynamic loading via option
+class Context:
+    def __init__(self, *, here=None, dump_extra_kwargs=None):
+        self.dump_extra_kwargs = dump_extra_kwargs
+        self.here = here
+        self.history = [None]
+        if here is not None:
+            self.chdir(here)
+
+    def chdir(self, here):
+        if self.history[-1] != here:
+            self.history.append(here)
+            os.chdir(here)
+
+    def get_module(self, rf, format=None):
+        return loading.get_module(rf, default_format=format)
+
+    @reify
+    def loader(self) -> "Loader":
+        return Loader(self)
+
+    @reify
+    def dumper(self) -> "Dumper":
+        return Dumper(self)
+
+
+class Dumper:
+    def __init__(self, ctx: Context):
+        self.ctx = ctx
+
+    def dumpfile(self, filename, data, *, raw=False, here=None):
+        here = here or self.ctx.here
+        if here is not None:
+            self.ctx.chdir(here)  # xxx
+
+        with open(filename, "w") as wf:
+            m = self.ctx.get_module(wf, format=format)
+            m.dump(data, fp=wf, raw=raw, extra_kwargs=self.ctx.dump_extra_kwargs)
+
+
+class Loader:
+    def __init__(self, ctx: Context):
+        self.ctx = ctx
+
+    def loadfile(self, filename: str, *, format="json", here=None):
+        here = here or self.ctx.here
+        if here is not None:
+            self.ctx.chdir(here)  # xxx
+
+        with open(filename) as rf:
+            m = self.ctx.get_module(rf, format=format)
+            return next(m.load(rf))
+
+
 class HelperModule:
-    def __init__(self, getter, *, factory=OrderedDict, additionals=None, dump=None):
+    def __init__(self, ctx, getter, *, factory=OrderedDict, additionals=None):
         self.getter = getter
         self.accessor = getter.accessor  # xxx
         self.factory = factory
         self.additionals = additionals
-        self.dump = dump or self._dump_default
+        self.ctx = ctx
 
     def __getattr__(self, k):
         if self.additionals is None:
@@ -23,12 +77,21 @@ class HelperModule:
     def d(self):
         return self.getter.d
 
-    def dumpfile(self, filename, data, *, raw=False):
-        with open(filename, "w") as wf:
-            self.dump(data, fp=wf, raw=raw)
+    def dumpfile(self, filename, data, *, raw=False, here=None):
+        try:
+            return self.ctx.dumper.dumpfile(filename, data, raw=raw, here=here)
+        except FileNotFoundError as e:
+            raise RuntimeError(
+                "{e} (where={where!r})".format(e=e, where=self.ctx.history[-1])
+            )
 
-    def _dump_default(self, data, *, fp=sys.stdout, raw=False):
-        print(data, file=fp, raw=raw)
+    def loadfile(self, filename, *, format="json", here=None):
+        try:
+            return self.ctx.loader.loadfile(filename, format=format, here=here)
+        except FileNotFoundError as e:
+            raise RuntimeError(
+                "{e} (where={where!r})".format(e=e, where=self.ctx.history[-1])
+            )
 
     def pick(self, *ks, d=None, default=None):
         d = d or self.d

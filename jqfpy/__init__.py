@@ -1,4 +1,4 @@
-from jqfpy.helpermodule import HelperModule
+from jqfpy.helpermodule import HelperModule, Context
 from jqfpy.accessor import Accessor
 
 
@@ -35,6 +35,11 @@ def exec_pycode(fnname, pycode):
     return env[fnname]
 
 
-def transform(fn, d, *, additionals=None, dump=None):
+def create_context(*, here=None, extra_kwargs=None) -> Context:
+    return Context(here=here, dump_extra_kwargs=extra_kwargs)
+
+
+def transform(ctx, fn, d, *, additionals=None):
     getter = Getter(d)
-    return fn(getter, h=HelperModule(getter, dump=dump, additionals=additionals))
+    h = HelperModule(ctx, getter, additionals=additionals)
+    return fn(getter, h=h)

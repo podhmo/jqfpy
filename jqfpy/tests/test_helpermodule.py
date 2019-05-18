@@ -9,8 +9,8 @@ class HelperModuleTests(unittest.TestCase):
 
     def _makeOne(self, d, *, factory):
         from jqfpy import Getter
-
-        return self._getTarget()(Getter(d), factory=factory)
+        ctx = None
+        return self._getTarget()(None, Getter(d), factory=factory)
 
     def test_pick(self):
         d = {

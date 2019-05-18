@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 here = os.path.abspath(os.path.dirname(__file__))
 try:
-    with open(os.path.join(here, "README.rst")) as f:
+    with open(os.path.join(here, "README.md")) as f:
         README = f.read()
     with open(os.path.join(here, "CHANGES.txt")) as f:
         CHANGES = f.read()
@@ -22,7 +22,7 @@ testing_extras = tests_require + []
 
 setup(
     name="jqfpy",
-    version="0.5.2",
+    version="0.5.2-1",
     description="jq for pythonista",
     long_description=README + "\n\n" + CHANGES,
     long_description_content_type="text/markdown",

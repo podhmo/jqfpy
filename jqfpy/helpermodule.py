@@ -1,18 +1,23 @@
 import sys
+import os
 import itertools
 from collections import OrderedDict
+from . import loading
 from . import accessor
 from . import _tree as tree
 
 
 # todo: dynamic loading via option
 class HelperModule:
-    def __init__(self, getter, *, factory=OrderedDict, additionals=None, dump=None):
+    def __init__(
+        self, getter, *, factory=OrderedDict, additionals=None, dump=None, here=None
+    ):
         self.getter = getter
         self.accessor = getter.accessor  # xxx
         self.factory = factory
         self.additionals = additionals
         self.dump = dump or self._dump_default
+        self.here = here
 
     def __getattr__(self, k):
         if self.additionals is None:
@@ -26,6 +31,14 @@ class HelperModule:
     def dumpfile(self, filename, data, *, raw=False):
         with open(filename, "w") as wf:
             self.dump(data, fp=wf, raw=raw)
+
+    def loadfile(self, filename, *, format="json", here=None):
+        here = here or self.here
+        if here is not None:
+            os.chdir(here)  # xxx
+        with open(filename) as rf:
+            m = loading.get_module(rf, default_format=format)
+            return m.load(rf)
 
     def _dump_default(self, data, *, fp=sys.stdout, raw=False):
         print(data, file=fp, raw=raw)

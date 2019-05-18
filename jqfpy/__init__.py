@@ -35,6 +35,7 @@ def exec_pycode(fnname, pycode):
     return env[fnname]
 
 
-def transform(fn, d, *, additionals=None, dump=None):
+def transform(fn, d, *, additionals=None, dump=None, here=None):
     getter = Getter(d)
-    return fn(getter, h=HelperModule(getter, dump=dump, additionals=additionals))
+    h = HelperModule(getter, dump=dump, additionals=additionals, here=here)
+    return fn(getter, h=h)

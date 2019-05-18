@@ -124,7 +124,7 @@ def main():
         with gentle_error_reporting(pycode, fp):
             for i, d in enumerate(_load(files)):
                 r = jqfpy.transform(
-                    transform_fn, d, dump=_dump, additionals=additionals
+                    transform_fn, d, dump=_dump, additionals=additionals, here=args.here
                 )
                 _dump(r, i=i)
     fp.flush()

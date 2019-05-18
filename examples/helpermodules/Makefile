@@ -40,3 +40,12 @@ dst:
 	cat src/03*/data.json | jqfpy ${TEE} dst/03/input.json
 	cat src/03*/data.json | jqfpy 'h.chunk(get("members"), n=5)' ${TEE} dst/03/chunk5.json
 	cat src/03*/data.json | jqfpy 'h.chunk(get("members"), n=4)' ${TEE} dst/03/chunk4.json
+
+# h.loadfile()
+04: dst
+	rm -rf dst/04 && mkdir dst/04
+	cat src/04loadfile/main.json | jqfpy --here=src/04loadfile  '{k: h.loadfile(fname) for k, fname in get().items()}' ${TEE} dst/04/stdout.json
+# here is cwd  (defaullt)
+	jqfpy 'import os.path; {k: h.loadfile(os.path.join("src/04loadfile/", fname)) for k, fname in get().items()}' src/04*/main.json ${TEE} dst/04/default.json
+# relative path
+	jqfpy --relative-path '{k: h.loadfile(fname) for k, fname in get().items()}' src/04*/main.json ${TEE} dst/04/relative-path.json

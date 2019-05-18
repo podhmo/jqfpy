@@ -57,7 +57,7 @@ class Loader:
 
         with open(filename) as rf:
             m = self.ctx.get_module(rf, format=format)
-            return m.load(rf)
+            return next(m.load(rf))
 
 
 class HelperModule:
@@ -78,10 +78,20 @@ class HelperModule:
         return self.getter.d
 
     def dumpfile(self, filename, data, *, raw=False, here=None):
-        return self.ctx.dumper.dumpfile(filename, data, raw=raw, here=here)
+        try:
+            return self.ctx.dumper.dumpfile(filename, data, raw=raw, here=here)
+        except FileNotFoundError as e:
+            raise RuntimeError(
+                "{e} (where={where!r})".format(e=e, where=self.ctx.history[-1])
+            )
 
     def loadfile(self, filename, *, format="json", here=None):
-        return self.ctx.loader.loadfile(filename, format=format, here=here)
+        try:
+            return self.ctx.loader.loadfile(filename, format=format, here=here)
+        except FileNotFoundError as e:
+            raise RuntimeError(
+                "{e} (where={where!r})".format(e=e, where=self.ctx.history[-1])
+            )
 
     def pick(self, *ks, d=None, default=None):
         d = d or self.d

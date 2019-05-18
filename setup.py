@@ -25,7 +25,7 @@ setup(
     version="0.5.2",
     description="jq for pythonista",
     long_description=README + "\n\n" + CHANGES,
-    long_description_content_type="text/x-rst",
+    long_description_content_type="text/markdown",
     classifiers=[
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",

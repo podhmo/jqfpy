@@ -1,3 +1,7 @@
+0.5.3
+
+- fix bug for h.dumpfile()
+
 0.5.2
 
 - add h.loadfile() function  (#35)

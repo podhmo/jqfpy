@@ -68,3 +68,17 @@ class GetTests(unittest.TestCase):
             with self.subTest(k=k):
                 got = target.get(k)
                 self.assertEqual(got, expected)
+
+    def test_get_list2(self):
+        d = {"me": {"children": [{"name": "x", "age": 20}, {"name": "y"}, {}]}}
+        target = self._makeOne(d)
+        got = target.get()
+
+        candidates = [
+            ("me/children[]/name", ["x", "y", None]),
+            ("*/children[]/name", ["x", "y", None]),
+        ]
+        for k, expected in candidates:
+            with self.subTest(k=k):
+                got = target.get(k)
+                self.assertEqual(got, expected)

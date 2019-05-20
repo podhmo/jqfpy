@@ -36,7 +36,7 @@ class Dumper:
     def __init__(self, ctx: Context):
         self.ctx = ctx
 
-    def dumpfile(self, filename, data, *, raw=False, here=None, format="json"):
+    def dumpfile(self, data, filename, *, raw=False, here=None, format="json"):
         here = here or self.ctx.here
         if here is not None:
             self.ctx.chdir(here)  # xxx
@@ -77,9 +77,9 @@ class HelperModule:
     def d(self):
         return self.getter.d
 
-    def dumpfile(self, filename, data, *, raw=False, here=None, format="json"):
+    def dumpfile(self, data, filename, *, raw=False, here=None, format="json"):
         try:
-            return self.ctx.dumper.dumpfile(filename, data, raw=raw, here=here)
+            return self.ctx.dumper.dumpfile(data, filename, raw=raw, here=here)
         except FileNotFoundError as e:
             raise RuntimeError(
                 "{e} (where={where!r})".format(e=e, where=self.ctx.history[-1])

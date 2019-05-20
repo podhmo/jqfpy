@@ -22,7 +22,7 @@ testing_extras = tests_require + []
 
 setup(
     name="jqfpy",
-    version="0.5.3",
+    version="0.5.4",
     description="jq for pythonista",
     long_description=README + "\n\n" + CHANGES,
     long_description_content_type="text/markdown",

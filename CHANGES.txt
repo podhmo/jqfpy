@@ -1,3 +1,8 @@
+0.5.4
+
+- change arguments order, h.dumpfile (#41)
+- fix bug for get() (#37)
+
 0.5.3
 
 - fix bug for h.dumpfile()

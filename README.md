@@ -151,6 +151,10 @@ helper functions are included.
 
 - pick()
 - omit()
+- flatten()
+- chunk()
+- loadfile()
+- dumpfile()
 
 pick()
 
@@ -181,6 +185,26 @@ $ cat 02data.yaml | jqfpy -i yaml 'h.omit("person/nickname")'
   }
 }
 ```
+
+flatten()
+
+```console
+$ seq 1 5 | jqfpy --slurp -c 'L = get(); [L, L]'
+[[1, 2, 3, 4, 5], [1, 2, 3, 4, 5]]
+$ seq 1 5 | jqfpy --slurp -c 'L = get(); h.flatten([L, L], n=1)'
+[1, 2, 3, 4, 5, 1, 2, 3, 4, 5]
+```
+
+chunk()
+
+```console
+$ seq 1 10 | jqfpy --slurp -c 'h.chunk(get(), n=3)'
+[[1, 2, 3], [4, 5, 6], [7, 8, 9], [10]]
+```
+
+loadfile()
+dumpfile()
+
 
 ### individual helper module with --additionals
 

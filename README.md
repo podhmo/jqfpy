@@ -65,7 +65,7 @@ todo.
 
 ### tutorial
 
-this is jqfpy version of `jq's Tutorial <https://stedolan.github.io/jq/tutorial/>`_.
+this is jqfpy version of [jq's Tutorial](https://stedolan.github.io/jq/tutorial/)
 
 ```console
 $ alias jsonDATA="curl 'https://api.github.com/repos/stedolan/jq/commits?per_page=5'"

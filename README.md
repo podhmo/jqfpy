@@ -65,7 +65,7 @@ todo.
 
 ### tutorial
 
-this is jqfpy version of `jq's Tutorial <https://stedolan.github.io/jq/tutorial/>`_.
+this is jqfpy version of [jq's Tutorial](https://stedolan.github.io/jq/tutorial/)
 
 ```console
 $ alias jsonDATA="curl 'https://api.github.com/repos/stedolan/jq/commits?per_page=5'"
@@ -151,6 +151,10 @@ helper functions are included.
 
 - pick()
 - omit()
+- flatten()
+- chunk()
+- loadfile()
+- dumpfile()
 
 pick()
 
@@ -181,6 +185,50 @@ $ cat 02data.yaml | jqfpy -i yaml 'h.omit("person/nickname")'
   }
 }
 ```
+
+flatten()
+
+```console
+$ seq 1 5 | jqfpy --slurp -c 'L = get(); [L, L]'
+[[1, 2, 3, 4, 5], [1, 2, 3, 4, 5]]
+$ seq 1 5 | jqfpy --slurp -c 'L = get(); h.flatten([L, L], n=1)'
+[1, 2, 3, 4, 5, 1, 2, 3, 4, 5]
+```
+
+chunk()
+
+```console
+$ seq 1 10 | jqfpy --slurp -c 'h.chunk(get(), n=3)'
+[[1, 2, 3], [4, 5, 6], [7, 8, 9], [10]]
+```
+
+loadfile()
+
+```console
+$ ls *.json
+a.json b.json
+$ echo '["a", "b"]' | jqfpy '{name: h.loadfile(f"{name}.json") for name in get()}'
+```
+
+`--here` and `--relative-path` options.
+
+```console
+# see ./x.json
+$ jqfpy 'h.loadfile("x.json")' a/b/main.json
+
+# see ./a/b/x.json
+$ jqfpy --here a/b/ 'h.loadfile("x.json")' a/b/main.json
+
+# see ./a/b/x.json
+$ jqfpy --relative-path 'h.loadfile("x.json")' a/b/main.json
+```
+
+dumpfile()
+
+```
+$ echo {"person0.json": {"name": "foo", "age": 20}, "person1.json": {"name": "bar}} | jqfpy '[h.dumpfile(v, fname) for fname, v in get().item()]' > /dev/null
+```
+
 
 ### individual helper module with --additionals
 

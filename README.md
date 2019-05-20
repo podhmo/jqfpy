@@ -203,7 +203,31 @@ $ seq 1 10 | jqfpy --slurp -c 'h.chunk(get(), n=3)'
 ```
 
 loadfile()
+
+```console
+$ ls *.json
+a.json b.json
+$ echo '["a", "b"]' | jqfpy '{name: h.loadfile(f"{name}.json") for name in get()}'
+```
+
+`--here` and `--relative-path` options.
+
+```console
+# see ./x.json
+$ jqfpy 'h.loadfile("x.json")' a/b/main.json
+
+# see ./a/b/x.json
+$ jqfpy --here a/b/ 'h.loadfile("x.json")' a/b/main.json
+
+# see ./a/b/x.json
+$ jqfpy --relative-path 'h.loadfile("x.json")' a/b/main.json
+```
+
 dumpfile()
+
+```
+$ echo {"person0.json": {"name": "foo", "age": 20}, "person1.json": {"name": "bar}} | jqfpy '[h.dumpfile(v, fname) for fname, v in get().item()]' > /dev/null
+```
 
 
 ### individual helper module with --additionals

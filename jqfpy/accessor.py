@@ -19,7 +19,7 @@ class Accessor:
                     next_key = access_keys[i + 1]
                     rest_keys = access_keys[i + 1 :]
                     if next_key.endswith("[]"):
-                        next_key = next_key[:-2]
+                        next_key = next_key.rstrip("[]")
                     for gk, v in d.items():
                         if hasattr(v, "__contains__") and next_key in v:
                             return self.access(rest_keys, d[gk])

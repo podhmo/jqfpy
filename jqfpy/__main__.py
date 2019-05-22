@@ -40,7 +40,7 @@ def main():
     parser.add_argument("-c", "--compact-output", action="store_true")
     parser.add_argument("-s", "--slurp", action="store_true")
     parser.add_argument("-S", "--sort-keys", action="store_true")
-    parser.add_argument("-a", "--ascii-output", action="store_true")
+    parser.add_argument("--ascii-output", action="store_true")
     parser.add_argument("-r", "--raw-output", action="store_true")
     parser.add_argument(
         "--relative-path",
@@ -50,12 +50,12 @@ def main():
     parser.add_argument("--here", default=None, help="cwd for h.dumpfile()")
 
     parser.add_argument("--buffered", action="store_true", dest="buffered")
-    parser.add_argument("--unbuffered", action="store_false", dest="buffered")
+    parser.add_argument("-u", "--unbuffered", action="store_false", dest="buffered")
     parser.set_defaults(buffered=True)
 
     parser.add_argument("--squash", action="count", default=0)
     parser.add_argument("--show-code", action="store_true")
-    parser.add_argument("--additionals")
+    parser.add_argument("-a", "--additionals")
 
     args = parser.parse_args()
 

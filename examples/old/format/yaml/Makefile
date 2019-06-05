@@ -23,7 +23,7 @@ default: 00 01 02 03 04 05
 
 04:
 	# ascii-output
-	${QJ} -r -a -o yaml 'get()' 04data.yaml > .qj.output40
+	${QJ} -r --ascii-output -o yaml 'get()' 04data.yaml > .qj.output40
 	diff -u 040expected.yaml .qj.output40
 	${QJ} -r -o yaml 'get()' 04data.yaml > .qj.output41
 	diff -u 041expected.yaml .qj.output41

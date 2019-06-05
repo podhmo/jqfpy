@@ -22,7 +22,7 @@ dst:
 03: dst
 	echo --ascii-output
 	cat 03data.json | ${QJ}  'get()'  ${TEE} dst/030.json
-	cat 03data.json | ${QJ} -a 'get()'  ${TEE} dst/031.json
+	cat 03data.json | ${QJ} --ascii-output 'get()'  ${TEE} dst/031.json
 
 04: dst
 	echo --raw-output

@@ -17,8 +17,10 @@ def _load_unbuffered(stream):
     return (s.rstrip() for s in stream)
 
 
-def dump(d, fp, *, squash_level=0, raw=False, extra_kwargs=None):
+def dump(d, fp, *, ignore_none=False, squash_level=0, raw=False, extra_kwargs=None):
     def _dump(d):
+        if d is None:
+            return
         if raw:
             print(d, file=fp)
         else:

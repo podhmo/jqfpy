@@ -56,6 +56,7 @@ def main():
 
     parser.add_argument("--squash", action="count", default=0)
     parser.add_argument("--show-code", action="store_true")
+    parser.add_argument("--show-none", dest="ignore_none", action="store_false")
     parser.add_argument("-a", "--additionals")
 
     args = parser.parse_args()
@@ -110,6 +111,7 @@ def main():
         m.dump(
             d,
             fp=fp,
+            ignore_none=args.ignore_none,
             squash_level=args.squash,
             raw=raw or args.raw_output,
             extra_kwargs=ctx.dump_extra_kwargs,

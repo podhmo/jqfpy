@@ -60,7 +60,7 @@ def dump(d, fp, *, ignore_none=False, squash_level=0, raw=False, extra_kwargs=No
     opts = extra_kwargs or dict(sort_keys=False, ensure_ascii=False)
 
     def _dump(d):
-        if d is None:
+        if ignore_none and d is None:
             return
         elif raw and isinstance(d, str):
             print(d, file=fp)

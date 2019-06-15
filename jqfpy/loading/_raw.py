@@ -19,7 +19,7 @@ def _load_unbuffered(stream):
 
 def dump(d, fp, *, ignore_none=False, squash_level=0, raw=False, extra_kwargs=None):
     def _dump(d):
-        if d is None:
+        if ignore_none and d is None:
             return
         if raw:
             print(d, file=fp)

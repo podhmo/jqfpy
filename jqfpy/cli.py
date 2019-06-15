@@ -3,8 +3,9 @@ import sys
 import contextlib
 import argparse
 import magicalimport
-import jqfpy
+
 from . import loading
+from . import create_pycode, exec_pycode, transform, create_context
 
 
 def _describe_pycode(pycode, *, indent="", fp=sys.stderr):
@@ -64,7 +65,7 @@ def main():
         args.file.append(open(args.code))
         args.code = "get()"
 
-    pycode = jqfpy.create_pycode(fnname, args.code)
+    pycode = create_pycode(fnname, args.code)
     fp = sys.stdout
 
     if args.show_code:
@@ -86,10 +87,10 @@ def main():
         ensure_ascii=args.ascii_output,
     )
     # xxx: chdir if here is not None
-    ctx = jqfpy.create_context(here=args.here, extra_kwargs=dump_extra_kwargs)
+    ctx = create_context(here=args.here, extra_kwargs=dump_extra_kwargs)
 
     with gentle_error_reporting(pycode, fp):
-        transform_fn = jqfpy.exec_pycode(fnname, pycode)
+        transform_fn = exec_pycode(fnname, pycode)
 
     def _load(streams, *, relative=args.relative_path):
         for stream in streams:
@@ -119,11 +120,11 @@ def main():
     if args.slurp:
         d = list(_load(files))
         with gentle_error_reporting(pycode, fp):
-            r = jqfpy.transform(ctx, transform_fn, d, additionals=additionals)
+            r = transform(ctx, transform_fn, d, additionals=additionals)
         _dump(r, i=0)
     else:
         with gentle_error_reporting(pycode, fp):
             for i, d in enumerate(_load(files)):
-                r = jqfpy.transform(ctx, transform_fn, d, additionals=additionals)
+                r = transform(ctx, transform_fn, d, additionals=additionals)
                 _dump(r, i=i)
     fp.flush()

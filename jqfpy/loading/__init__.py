@@ -46,6 +46,14 @@ class Dispatcher:
 _repo = Repository()
 
 
+@_repo.register(".txt", ".raw")
+def raw():
+    from . import _raw as m
+
+    m.SEPARATOR = None
+    return m
+
+
 @_repo.register(".json", ".js")
 def json():
     from . import _json as m

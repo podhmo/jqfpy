@@ -31,10 +31,10 @@ def main():
     parser.add_argument("code", nargs="?", default="get()")
     parser.add_argument("file", nargs="*", type=argparse.FileType("r"))
     parser.add_argument(
-        "-i", "--input-format", choices=["json", "yaml", "ltsv"], default="json"
+        "-i", "--input-format", choices=["json", "yaml", "ltsv", "raw"], default="json"
     )
     parser.add_argument(
-        "-o", "--output-format", choices=["json", "yaml", "ltsv"], default="json"
+        "-o", "--output-format", choices=["json", "yaml", "ltsv", "raw"], default="json"
     )
 
     parser.add_argument("-c", "--compact-output", action="store_true")

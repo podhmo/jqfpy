@@ -1,6 +1,10 @@
+0.6.1
+
+- fix `--show-none` option, always ignored, in 0.6.0
+
 0.6.0
 
-- add `show-none` (default, if return value is None, doesn't write to stdout)
+- add `--show-none` (default, if return value is None, doesn't write to stdout)
 - add raw format
 - add short option `-a` and `-u` (drop `--ascii-output` asa `-a`)
 

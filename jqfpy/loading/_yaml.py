@@ -42,7 +42,7 @@ def dump(d, fp, *, ignore_none=False, squash_level=0, raw=False, extra_kwargs=No
     allow_unicode = not extra_kwargs.get("ensure_ascii", False)
 
     def _dump(d):
-        if d is None:
+        if ignore_none and d is None:
             return
         yaml.dump(
             d,

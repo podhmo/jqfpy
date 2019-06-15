@@ -9,11 +9,13 @@ def load(stream, *, buffered=False):
         )
 
 
-def dump(d, fp, *, squash_level=0, raw=False, extra_kwargs=None):
+def dump(d, fp, *, ignore_none=False, squash_level=0, raw=False, extra_kwargs=None):
     opts = extra_kwargs or dict(sort_keys=False, ensure_ascii=False)
 
     def _dump(d):
-        if raw and isinstance(d, str):
+        if d is None:
+            return
+        elif raw and isinstance(d, str):
             print(d, file=fp)
         else:
             if opts.get("sort_keys", False):

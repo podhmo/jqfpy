@@ -36,12 +36,14 @@ def load(stream, *, buffered=False):
     return yaml.load_all(stream, Loader=Loader)
 
 
-def dump(d, fp, *, squash_level=0, raw=False, extra_kwargs=None):
+def dump(d, fp, *, ignore_none=False, squash_level=0, raw=False, extra_kwargs=None):
     extra_kwargs = extra_kwargs or {}
     default_flow_style = extra_kwargs.get("indent", None) is None
     allow_unicode = not extra_kwargs.get("ensure_ascii", False)
 
     def _dump(d):
+        if d is None:
+            return
         yaml.dump(
             d,
             fp,

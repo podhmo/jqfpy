@@ -80,7 +80,7 @@ def main():
 
     additionals = None
     if args.additionals is not None:
-        additionals = magicalimport.import_module(args.additionals)
+        additionals = magicalimport.import_module(args.additionals, cwd=True)
 
     dump_extra_kwargs = dict(
         indent=None if args.compact_output else 2,

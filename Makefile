@@ -7,3 +7,14 @@ ci:
 	test -z `git diff examples` || (echo  "*********DIFF*********" && git diff examples && exit 2)
 _find-candidates:
 	@find ${WHERE} -mindepth 2 -name Makefile | xargs -n 1 -I{} dirname {}
+
+build:
+#	pip install wheel
+	python setup.py bdist_wheel
+
+upload:
+#	pip install twine
+	twine check dist/magicalimport-$(shell cat VERSION)*
+	twine upload dist/magicalimport-$(shell cat VERSION)*
+
+.PHONY: build upload

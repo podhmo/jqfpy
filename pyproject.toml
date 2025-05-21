@@ -4,17 +4,46 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "jqfpy"
-version = "0.0.1" # Placeholder, will be overridden by setup.cfg
+version = "0.6.2"
 description = "jq for pythonista"
-dynamic = [
-    "readme",
-    "license",
-    "authors",
-    "keywords",
-    "classifiers",
-    "dependencies",
-    "optional-dependencies"
+authors = [
+    {name = "podhmo", email = "ababjam61+github@gmail.com"},
 ]
+keywords = ["jq"]
+classifiers = [
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.5",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = [
+    "magicalimport",
+]
+license = {file = "LICENSE"}
+urls = {Homepage = "https://github.com/podhmo/jqfpy"}
+
+# readme is dynamic and configured in [tool.setuptools.dynamic.readme]
+dynamic = ["readme"]
+
+[project.optional-dependencies]
+yaml = ["PyYAML"]
+dev = ["black"]
 
 [project.scripts]
 jqfpy = "jqfpy.__main__:main"
+
+[tool.setuptools]
+include-package-data = true
+zip-safe = false
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["jqfpy*"]
+exclude = ["jqfpy.tests*"]
+namespaces = false
+
+[tool.setuptools.dynamic.readme]
+file = ["README.md", "CHANGES.txt"]
+content-type = "text/markdown"

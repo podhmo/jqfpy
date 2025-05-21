@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jqfpy"
+version = "0.0.1" # Placeholder, will be overridden by setup.cfg
+description = "jq for pythonista"
+dynamic = [
+    "readme",
+    "license",
+    "authors",
+    "keywords",
+    "classifiers",
+    "dependencies",
+    "optional-dependencies"
+]
+
+[project.scripts]
+jqfpy = "jqfpy.__main__:main"
